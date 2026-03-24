@@ -3,1267 +3,1202 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Solvr — Patient Acquisition for Cosmetic Dental Practices</title>
-<meta name="description" content="Over half your patients search on mobile. Most dental sites weren't built for that. We fix it — free — before you spend a cent.">
-<meta name="theme-color" content="#05080F">
-<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%2305080F'/><text x='50' y='68' font-family='sans-serif' font-size='50' font-weight='bold' fill='%231A8FFF' text-anchor='middle'>S.</text></svg>">
+<title>Solvr — More Patients. Zero Risk.</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;800&family=Instrument+Sans:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,800&family=Instrument+Sans:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
 <style>
-@property --angle {
-  syntax: '<angle>';
-  initial-value: 0deg;
-  inherits: false;
-}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
 :root {
-  --bg: #05080F;
-  --surface: #0D1117;
-  --surface-2: #131A24;
-  --border: rgba(255,255,255,0.06);
-  --white: #EEF2FF;
-  --muted: #6B7A99;
-  --accent: #1A8FFF;
-  --accent-glow: rgba(26,143,255,0.15);
+  --ink: #0F0E0C;
+  --ink2: #3A3832;
+  --ink3: #8A8780;
+  --ink4: #C4C1BA;
+  --paper: #F5F2EC;
+  --paper2: #EDE9E0;
+  --paper3: #E3DED3;
+  --rule: rgba(15,14,12,0.12);
+  --rule2: rgba(15,14,12,0.22);
+  --blue: #1A8FFF;
   --green: #00C97A;
-  --fh: 'Bricolage Grotesque', sans-serif;
-  --fb: 'Instrument Sans', sans-serif;
-  --ease: cubic-bezier(.4,0,.2,1);
-  --mw: 1140px;
-  --pill: 50px;
+  --red: #D94F3D;
+  --hed: 'Bricolage Grotesque', sans-serif;
+  --body: 'Instrument Sans', sans-serif;
 }
-*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+
 html { scroll-behavior: smooth; }
+
 body {
-  background: var(--bg);
-  color: var(--white);
-  font-family: var(--fb);
-  font-weight: 400;
-  line-height: 1.7;
-  -webkit-font-smoothing: antialiased;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--body);
+  font-size: 16px;
+  line-height: 1.6;
   overflow-x: hidden;
-  position: relative;
-}
-body::after {
-  content: '';
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  opacity: 0.03;
-  z-index: 9999;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-}
-img { max-width:100%; display:block; }
-a { text-decoration:none; color:inherit; }
-button { cursor:pointer; border:none; background:none; font-family:inherit; }
-ul { list-style:none; }
-
-.container { max-width: var(--mw); margin: 0 auto; padding: 0 24px; }
-h1, h2, h3 { font-family: var(--fh); font-weight: 800; line-height: 1.05; color: var(--white); }
-h1 { font-size: clamp(2.5rem, 5.5vw, 4.25rem); }
-h2 { font-size: clamp(1.75rem, 4vw, 3rem); }
-h3 { font-size: clamp(1rem, 1.8vw, 1.25rem); font-weight: 600; }
-.sub { font-size: clamp(15px, 1.5vw, 18px); color: var(--muted); line-height: 1.75; max-width: 560px; }
-.accent { color: var(--accent); }
-section { padding: 96px 0; }
-
-.btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  border-radius: var(--pill);
-  font-family: var(--fb);
-  font-weight: 500;
-  transition: all .3s var(--ease);
-  cursor: pointer;
-  white-space: nowrap;
-  font-size: 0.92rem;
-}
-.btn-lg { padding: 16px 36px; font-size: 1rem; }
-.btn-md { padding: 12px 28px; font-size: 0.9rem; }
-.btn-fill {
-  background: var(--accent);
-  color: #fff;
-  box-shadow: 0 4px 20px rgba(26,143,255,0.2);
-}
-.btn-fill:hover {
-  background: #1478D4;
-  transform: translateY(-2px);
-  box-shadow: 0 0 28px rgba(26,143,255,0.45);
-}
-.btn-ghost {
-  border: 1px solid rgba(255,255,255,0.12);
-  color: var(--white);
-}
-.btn-ghost:hover {
-  border-color: var(--accent);
-  background: rgba(26,143,255,0.04);
 }
 
-/* Reveal animations */
-.rv { opacity:0; transform:translateY(24px); transition: opacity .6s var(--ease), transform .6s var(--ease); }
-.rv.vis { opacity:1; transform:translateY(0); }
-.d1{transition-delay:.08s} .d2{transition-delay:.16s} .d3{transition-delay:.24s} .d4{transition-delay:.32s} .d5{transition-delay:.4s}
-
-/* ===== NAV ===== */
-.nav {
-  position: fixed;
+/* ── NAV ── */
+nav {
+  border-bottom: 3px solid var(--ink);
+  padding: 0 6vw;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: stretch;
+  position: sticky;
   top: 0;
-  left: 0;
-  width: 100%;
-  z-index: 1000;
-  padding: 18px 0;
-  transition: all .35s var(--ease);
+  background: var(--paper);
+  z-index: 100;
 }
-.nav.scrolled {
-  backdrop-filter: blur(24px);
-  -webkit-backdrop-filter: blur(24px);
-  background: rgba(5,8,15,0.85);
-  border-bottom: 1px solid var(--border);
-  padding: 12px 0;
-}
-.nav-inner {
+.nav-left {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  max-width: var(--mw);
-  margin: 0 auto;
-  padding: 0 24px;
+  gap: 28px;
+  padding: 15px 24px 15px 0;
+  border-right: 1px solid var(--rule2);
 }
+.nav-left a {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink3);
+  text-decoration: none;
+  transition: color 0.15s;
+}
+.nav-left a:hover { color: var(--ink); }
 .nav-logo {
-  font-family: var(--fh);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 32px;
+  font-family: var(--hed);
+  font-weight: 800;
+  font-size: 26px;
+  letter-spacing: -0.04em;
+  color: var(--ink);
+  text-transform: uppercase;
+}
+.nav-right {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  padding: 15px 0 15px 24px;
+  border-left: 1px solid var(--rule2);
+}
+.nav-cta {
+  background: var(--ink);
+  color: var(--paper);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  padding: 10px 22px;
+  text-decoration: none;
+  transition: background 0.15s;
+}
+.nav-cta:hover { background: var(--blue); }
+
+/* ── HERO ── */
+.hero {
+  display: grid;
+  grid-template-columns: 1fr 460px;
+  min-height: calc(100vh - 62px);
+  border-bottom: 2px solid var(--ink);
+}
+.hero-left {
+  padding: 60px 5vw 60px 6vw;
+  border-right: 1px solid var(--rule2);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 40px;
+}
+.hero-dateline {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink3);
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  animation: up 0.55s ease both;
+}
+.hero-dateline::after { content: ''; flex: 1; height: 1px; background: var(--rule); }
+
+.hero-left h1 {
+  font-family: var(--hed);
+  font-weight: 800;
+  font-size: clamp(46px, 5.8vw, 78px);
+  line-height: 0.93;
+  letter-spacing: -0.04em;
+  color: var(--ink);
+  text-transform: uppercase;
+  animation: up 0.55s ease 0.1s both;
+}
+.hero-left h1 em { font-style: normal; color: var(--blue); }
+
+.hero-proof {
+  animation: up 0.55s ease 0.2s both;
+}
+.hero-proof-line {
+  display: flex;
+  align-items: baseline;
+  gap: 16px;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--rule);
+}
+.hero-proof-line:first-child { border-top: 1px solid var(--rule); }
+.proof-stat {
+  font-family: var(--hed);
   font-weight: 800;
   font-size: 28px;
-  color: var(--white);
+  letter-spacing: -0.04em;
+  color: var(--ink);
+  min-width: 72px;
 }
-.nav-logo .dot { color: var(--accent); }
-.nav-links {
-  display: flex;
-  gap: 36px;
-  align-items: center;
-}
-.nav-links a {
-  font-family: var(--fb);
+.proof-label {
   font-size: 14px;
-  font-weight: 400;
-  color: var(--muted);
-  transition: color .25s;
+  color: var(--ink2);
+  line-height: 1.4;
 }
-.nav-links a:hover { color: var(--white); }
-.nav-cta { display: flex; align-items: center; }
-.hamburger {
-  display: none;
-  flex-direction: column;
-  gap: 5px;
-  cursor: pointer;
-  z-index: 1001;
-  padding: 8px;
+
+.hero-bottom {
+  animation: up 0.55s ease 0.3s both;
 }
-.hamburger span {
-  display: block;
-  width: 22px;
-  height: 2px;
-  background: var(--white);
-  transition: all .3s var(--ease);
+.hero-deck {
+  font-size: 18px;
+  font-style: italic;
+  color: var(--ink2);
+  line-height: 1.5;
+  margin-bottom: 28px;
+  max-width: 460px;
 }
-.hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
-.hamburger.open span:nth-child(2) { opacity: 0; }
-.hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
-.mobile-menu {
-  display: none;
-  position: fixed;
-  inset: 0;
-  background: rgba(5,8,15,0.96);
-  backdrop-filter: blur(24px);
-  -webkit-backdrop-filter: blur(24px);
-  z-index: 999;
+.hero-cta-wrap {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+.btn-primary {
+  display: inline-block;
+  background: var(--blue);
+  color: #fff;
+  font-size: 15px;
+  font-weight: 600;
+  padding: 15px 30px;
+  text-decoration: none;
+  transition: opacity 0.15s;
+}
+.btn-primary:hover { opacity: 0.88; }
+.hero-cta-note {
+  font-size: 13px;
+  color: var(--ink3);
+  font-style: italic;
+}
+
+/* HERO RIGHT — phones */
+.hero-right {
+  background: var(--paper2);
+  display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 32px;
+  padding: 48px 32px;
+  gap: 14px;
+  animation: up 0.55s ease 0.25s both;
 }
-.mobile-menu.open { display: flex; }
-.mobile-menu a {
-  font-family: var(--fb);
-  font-size: 18px;
-  color: var(--white);
-  font-weight: 400;
+.comparison-label {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink3);
+  align-self: flex-start;
 }
-.mobile-menu .btn { margin-top: 12px; }
+.phones-row {
+  display: flex;
+  align-items: flex-end;
+  gap: 18px;
+  position: relative;
+}
+.phone {
+  width: 155px;
+  border-radius: 24px;
+  border: 2px solid var(--ink);
+  background: #fff;
+  overflow: hidden;
+  box-shadow: 4px 6px 0 var(--ink);
+}
+.phone-bad { transform: rotate(-4deg) translateY(18px); opacity: 0.42; filter: grayscale(0.4); }
+.phone-good { transform: rotate(2deg); box-shadow: 6px 8px 0 var(--ink); }
+.phone-notch { height: 20px; background: var(--ink); display: flex; align-items: center; justify-content: center; }
+.phone-notch::after { content: ''; width: 42px; height: 7px; background: var(--paper2); border-radius: 0 0 6px 6px; }
 
-/* ===== HERO ===== */
-.hero {
-  padding: 160px 0 96px;
+/* bad screen */
+.bad-screen { background: #e9e9e5; height: 275px; overflow: hidden; font-family: sans-serif; }
+.bs-header { background: #2a4a6b; padding: 5px 7px; font-size: 7px; color: #fff; font-weight: 700; }
+.bs-nav { display: flex; gap: 3px; padding: 3px 7px; background: #1b3050; }
+.bs-nav span { font-size: 5px; color: rgba(255,255,255,0.55); white-space: nowrap; }
+.bs-img { height: 52px; background: linear-gradient(#ccc,#aaa); display: flex; align-items: center; justify-content: center; font-size: 6px; color: #666; text-align: center; }
+.bs-txt { padding: 6px 7px; font-size: 5px; color: #444; line-height: 1.5; }
+.bs-overflow { padding: 3px 7px; font-size: 5px; color: #999; white-space: nowrap; width: 200%; overflow: hidden; }
+.bs-hours { padding: 3px 7px; font-size: 5px; color: #666; }
+.bs-btn { display: inline-block; margin: 4px 7px; background: #2a4a6b; color: #fff; font-size: 5px; padding: 3px 7px; }
+
+/* good screen */
+.good-screen { background: #0B0F1A; height: 275px; overflow: hidden; position: relative; }
+.gs-header { background: var(--blue); padding: 6px 9px; display: flex; justify-content: space-between; align-items: center; }
+.gs-header span { font-size: 8px; font-weight: 700; color: #fff; font-family: var(--hed); }
+.gs-header a { font-size: 6px; background: rgba(255,255,255,0.2); color: #fff; padding: 2px 5px; border-radius: 3px; font-weight: 600; }
+.gs-body { padding: 10px 9px; }
+.gs-h1 { font-family: var(--hed); font-size: 12px; font-weight: 800; color: #fff; line-height: 1.15; margin-bottom: 5px; }
+.gs-sub { font-size: 6px; color: rgba(255,255,255,0.5); line-height: 1.45; margin-bottom: 8px; }
+.gs-cta { display: block; background: var(--blue); color: #fff; font-size: 7.5px; font-weight: 700; text-align: center; padding: 5px; border-radius: 4px; margin-bottom: 7px; }
+.gs-stars { font-size: 7px; color: #FFB800; letter-spacing: 1px; }
+.gs-review { font-size: 5px; color: rgba(255,255,255,0.4); margin-top: 2px; margin-bottom: 7px; }
+.gs-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 3px; margin: 0 9px; }
+.gs-card { background: rgba(26,143,255,0.12); border: 1px solid rgba(26,143,255,0.2); border-radius: 4px; padding: 4px 5px; }
+.gs-card strong { display: block; font-size: 6px; color: #fff; }
+.gs-card span { font-size: 5px; color: rgba(255,255,255,0.45); }
+.gs-chat { position: absolute; bottom: 10px; right: 9px; width: 24px; height: 24px; background: var(--green); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 11px; }
+
+.vs-mark {
+  position: absolute;
+  top: 44%; left: 50%;
+  transform: translate(-50%, -50%);
+  font-family: var(--hed);
+  font-weight: 800;
+  font-size: 11px;
+  color: var(--ink3);
+  background: var(--paper2);
+  padding: 4px 6px;
+  border: 1px solid var(--rule2);
+  letter-spacing: 0.04em;
+}
+.phone-caption {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  text-align: center;
+  margin-top: 9px;
+}
+.phone-caption.bad { color: var(--red); }
+.phone-caption.good { color: var(--green); }
+
+/* ── SECTION BASE ── */
+.section { padding: 80px 6vw; border-bottom: 1px solid var(--rule2); }
+.section-alt { background: var(--paper2); }
+
+.eyebrow {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink3);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+.eyebrow::before { content: ''; width: 18px; height: 2px; background: var(--ink3); }
+
+.sec-h2 {
+  font-family: var(--hed);
+  font-weight: 800;
+  font-size: clamp(28px, 3vw, 44px);
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+  color: var(--ink);
+  text-transform: uppercase;
+  margin-bottom: 14px;
+  max-width: 680px;
+}
+.sec-h2 em { font-style: normal; color: var(--red); }
+
+.sec-intro {
+  font-size: 17px;
+  color: var(--ink2);
+  line-height: 1.65;
+  max-width: 580px;
+  margin-bottom: 52px;
+  font-style: italic;
+}
+
+/* ── PROBLEMS ── */
+/* Intro pull-quote before the list */
+.problems-pullquote {
+  border-left: 4px solid var(--red);
+  padding: 4px 0 4px 24px;
+  margin-bottom: 52px;
+  max-width: 640px;
+}
+.problems-pullquote p {
+  font-family: var(--hed);
+  font-weight: 800;
+  font-size: clamp(20px, 2.2vw, 28px);
+  letter-spacing: -0.02em;
+  color: var(--ink);
+  line-height: 1.2;
+}
+.problems-pullquote span {
+  display: block;
+  margin-top: 10px;
+  font-size: 14px;
+  color: var(--ink3);
+  font-style: italic;
+}
+
+.problems-list { display: flex; flex-direction: column; }
+.problem-row {
+  display: grid;
+  grid-template-columns: 44px 1fr 120px;
+  gap: 20px;
+  align-items: start;
+  padding: 28px 0;
+  border-bottom: 1px solid var(--rule);
+  transition: background 0.1s;
+}
+.problem-row:first-child { border-top: 1px solid var(--rule); }
+.prob-num {
+  font-family: var(--hed);
+  font-weight: 800;
+  font-size: 11px;
+  color: var(--ink4);
+  letter-spacing: 0.06em;
+  padding-top: 3px;
+}
+.prob-body h4 {
+  font-family: var(--hed);
+  font-weight: 800;
+  font-size: 18px;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+  margin-bottom: 7px;
+}
+.prob-body p { font-size: 14px; color: var(--ink2); line-height: 1.65; max-width: 520px; }
+.prob-cost {
+  text-align: right;
+  padding-top: 2px;
+}
+.prob-cost strong {
+  display: block;
+  font-family: var(--hed);
+  font-weight: 800;
+  font-size: 15px;
+  letter-spacing: -0.02em;
+  color: var(--red);
+  line-height: 1.2;
+}
+.prob-cost span { font-size: 11px; color: var(--ink3); text-transform: uppercase; letter-spacing: 0.05em; }
+
+/* ── PROCESS ── */
+.process-outer {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+  border: 2px solid var(--ink);
+}
+/* left: steps 1,3,4 in a column */
+.process-steps {
+  border-right: 2px solid var(--ink);
+}
+.process-step {
+  padding: 28px 28px;
+  border-bottom: 1px solid var(--rule2);
+  display: grid;
+  grid-template-columns: 40px 1fr;
+  gap: 16px;
+  align-items: start;
+}
+.process-step:last-child { border-bottom: none; }
+.ps-num {
+  font-family: var(--hed);
+  font-weight: 800;
+  font-size: 13px;
+  color: var(--ink4);
+  letter-spacing: 0.04em;
+  padding-top: 3px;
+}
+.ps-body h3 {
+  font-family: var(--hed);
+  font-weight: 800;
+  font-size: 16px;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+  text-transform: uppercase;
+  margin-bottom: 7px;
+}
+.ps-body p { font-size: 13px; color: var(--ink2); line-height: 1.65; }
+.ps-note {
+  display: inline-block;
+  margin-top: 10px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--green);
+  border-bottom: 1px solid currentColor;
+  padding-bottom: 1px;
+}
+
+/* right: the DEMO step — hero treatment */
+.process-demo {
+  padding: 40px 32px;
+  background: var(--ink);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 24px;
   position: relative;
   overflow: hidden;
 }
-.hero::before {
-  content: '';
+.process-demo::before {
+  content: '02';
   position: absolute;
-  top: -100px;
-  left: -200px;
-  width: 600px;
-  height: 600px;
-  background: radial-gradient(circle, rgba(26,143,255,0.08) 0%, transparent 70%);
-  pointer-events: none;
-}
-.hero-grid {
-  display: grid;
-  grid-template-columns: 58% 42%;
-  gap: 48px;
-  align-items: center;
-}
-.hero-text h1 { margin-bottom: 24px; }
-.hero-sub {
-  font-size: 18px;
-  color: var(--muted);
-  line-height: 1.75;
-  max-width: 500px;
-  margin-bottom: 36px;
-}
-.hero-ctas {
-  display: flex;
-  gap: 16px;
-  flex-wrap: wrap;
-  margin-bottom: 36px;
-}
-.trust-strip {
-  display: flex;
-  gap: 28px;
-  flex-wrap: wrap;
-}
-.trust-item {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 14px;
-  color: var(--muted);
-}
-.trust-dot {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: var(--green);
-  box-shadow: 0 0 8px rgba(0,201,122,0.4);
-}
-.hero-image {
-  position: relative;
-}
-.hero-image img {
-  border-radius: 20px;
-  width: 100%;
-  height: 480px;
-  object-fit: cover;
-  box-shadow: 0 20px 60px rgba(26,143,255,0.12), 0 0 80px rgba(26,143,255,0.06);
-}
-
-/* ===== STATS BAR ===== */
-.stats-bar {
-  background: var(--surface);
-  padding: 56px 0;
-  border-top: 1px solid var(--border);
-  border-bottom: 1px solid var(--border);
-}
-.stats-grid {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-.stat-item {
-  flex: 1;
-  text-align: center;
-  padding: 0 40px;
-}
-.stat-divider {
-  width: 1px;
-  height: 64px;
-  background: var(--border);
-  flex-shrink: 0;
-}
-.stat-num {
-  font-family: var(--fh);
+  top: -10px; right: -10px;
+  font-family: var(--hed);
   font-weight: 800;
-  font-size: clamp(2.5rem, 4.5vw, 3.5rem);
-  color: var(--accent);
+  font-size: 160px;
   line-height: 1;
-  margin-bottom: 8px;
-}
-.stat-label {
-  font-size: 15px;
-  color: var(--muted);
-  max-width: 200px;
-  margin: 0 auto;
-}
-
-/* ===== PROBLEM ===== */
-.problem { padding: 96px 0; }
-.problem-header { text-align: center; margin-bottom: 64px; }
-.problem-header h2 { margin-bottom: 12px; }
-.problem-header .sub { margin: 0 auto; }
-.problem-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 48px;
-  align-items: center;
-}
-.problem-img img {
-  border-radius: 16px;
-  width: 100%;
-  height: 520px;
-  object-fit: cover;
-}
-.problem-cards { display: flex; flex-direction: column; gap: 0; }
-.problem-card {
-  background: var(--surface-2);
-  border: 1px solid var(--border);
-  border-radius: 0;
-  padding: 28px 24px;
-  position: relative;
-}
-.problem-card + .problem-card { border-top: none; }
-/* Corner decorator marks */
-.problem-card::before,
-.problem-card::after {
-  content: '';
-  position: absolute;
-  width: 8px;
-  height: 8px;
+  letter-spacing: -0.06em;
+  color: rgba(255,255,255,0.04);
   pointer-events: none;
 }
-.problem-card::before {
-  top: -1px;
-  right: -1px;
-  border-top: 2px solid var(--accent);
-  border-right: 2px solid var(--accent);
+.demo-eyebrow {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.35);
 }
-.problem-card::after {
-  bottom: -1px;
-  left: -1px;
-  border-bottom: 2px solid var(--accent);
-  border-left: 2px solid var(--accent);
-}
-.problem-num {
-  font-family: var(--fh);
+.demo-headline {
+  font-family: var(--hed);
   font-weight: 800;
-  font-size: 13px;
-  color: var(--accent);
-  margin-bottom: 10px;
-  letter-spacing: 1px;
+  font-size: clamp(22px, 2.2vw, 30px);
+  letter-spacing: -0.025em;
+  color: #fff;
+  line-height: 1.15;
+  text-transform: uppercase;
 }
-.problem-card h3 { margin-bottom: 8px; font-size: 16px; }
-.problem-card p { font-size: 14px; color: var(--muted); line-height: 1.7; }
-
-/* ===== SOLUTION ===== */
-.solution { padding: 96px 0; }
-.solution-header { text-align: center; margin-bottom: 48px; }
-.solution-header h2 { margin-bottom: 16px; }
-.solution-header .sub { margin: 0 auto; max-width: 620px; }
-.glass-callout {
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  background: rgba(26,143,255,0.05);
-  border: 1px solid rgba(26,143,255,0.18);
-  border-radius: 16px;
-  padding: 32px 36px;
-  max-width: 780px;
-  margin: 0 auto 56px;
-  font-size: 16px;
-  line-height: 1.75;
-  color: var(--white);
-  text-align: center;
+.demo-headline em { font-style: normal; color: var(--blue); }
+.demo-body {
+  font-size: 14px;
+  color: rgba(255,255,255,0.55);
+  line-height: 1.7;
 }
-.outcome-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 16px 40px;
-  max-width: 860px;
-  margin: 0 auto 48px;
-}
-.outcome-row {
-  display: flex;
-  align-items: flex-start;
-  gap: 12px;
-  padding: 12px 0;
-}
-.outcome-arrow {
-  color: var(--accent);
-  font-size: 18px;
-  flex-shrink: 0;
-  margin-top: 2px;
-}
-.outcome-text {
-  font-size: 15px;
-  color: var(--muted);
-  line-height: 1.65;
-}
-.solution-cta { text-align: center; }
-
-/* ===== PROCESS ===== */
-.process { padding: 96px 0; }
-.process-header { text-align: center; margin-bottom: 64px; }
-.process-header h2 { margin-bottom: 8px; }
-.process-header .sub { margin: 0 auto; }
-.steps-row {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  position: relative;
-  gap: 0;
-}
-.steps-row::before {
-  content: '';
-  position: absolute;
-  top: 24px;
-  left: 48px;
-  right: 48px;
-  height: 1px;
-  border-top: 2px dashed rgba(255,255,255,0.08);
-}
-.step {
-  flex: 1;
-  text-align: center;
-  position: relative;
-  padding: 0 12px;
-}
-.step-num {
-  width: 48px;
-  height: 48px;
-  border-radius: 50%;
-  background: var(--surface-2);
-  border: 2px solid var(--accent);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-family: var(--fh);
-  font-weight: 800;
-  font-size: 16px;
-  color: var(--accent);
-  margin: 0 auto 20px;
-  position: relative;
-  z-index: 2;
-}
-.step h3 {
-  font-size: 15px;
-  margin-bottom: 8px;
-  color: var(--white);
-}
-.step p {
-  font-size: 13px;
-  color: var(--muted);
-  line-height: 1.65;
-}
-
-/* ===== PRICING ===== */
-.pricing { padding: 96px 0; }
-.pricing-header { text-align: center; margin-bottom: 40px; }
-.pricing-header h2 { margin-bottom: 16px; }
-.value-frame {
-  background: var(--surface-2);
-  border-left: 3px solid var(--accent);
-  border-radius: 12px;
-  padding: 28px 32px;
-  max-width: 860px;
-  margin: 0 auto 56px;
-  font-size: 15px;
-  line-height: 1.75;
-  color: var(--muted);
-}
-.pricing-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 24px;
-  max-width: 980px;
-  margin: 0 auto;
-}
-.pricing-card {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 16px;
-  padding: 36px 28px;
+.demo-proof {
   display: flex;
   flex-direction: column;
+  gap: 10px;
+  padding-top: 20px;
+  border-top: 1px solid rgba(255,255,255,0.1);
 }
-.pricing-card.featured {
-  position: relative;
-  background: var(--surface);
-  border: none;
-}
-.pricing-card.featured::before {
-  content: '';
-  position: absolute;
-  inset: -2px;
-  border-radius: 18px;
-  padding: 2px;
-  background: conic-gradient(from var(--angle), var(--accent), rgba(26,143,255,0.15), var(--accent), rgba(26,143,255,0.15), var(--accent));
-  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-  -webkit-mask-composite: xor;
-  mask-composite: exclude;
-  animation: rotate-border 4s linear infinite;
-}
-@keyframes rotate-border {
-  to { --angle: 360deg; }
-}
-.badge-popular {
-  display: inline-block;
-  background: var(--accent);
-  color: #fff;
-  font-size: 11px;
-  font-weight: 500;
-  letter-spacing: 1px;
-  text-transform: uppercase;
-  padding: 5px 14px;
-  border-radius: var(--pill);
-  margin-bottom: 16px;
-  width: fit-content;
-}
-.pricing-tier {
-  font-family: var(--fh);
-  font-weight: 800;
-  font-size: 20px;
-  margin-bottom: 4px;
-}
-.pricing-tagline {
-  font-size: 13px;
-  color: var(--muted);
-  margin-bottom: 20px;
-}
-.pricing-amount {
-  font-family: var(--fh);
-  font-weight: 800;
-  font-size: 40px;
-  color: var(--white);
-  margin-bottom: 2px;
-}
-.pricing-period {
-  font-size: 13px;
-  color: var(--muted);
-  margin-bottom: 28px;
-}
-.pricing-features {
-  flex: 1;
-  margin-bottom: 28px;
-}
-.pricing-features li {
-  font-size: 14px;
-  color: var(--muted);
-  padding: 6px 0;
+.demo-proof-item {
   display: flex;
   align-items: flex-start;
   gap: 10px;
+  font-size: 13px;
+  color: rgba(255,255,255,0.6);
+  line-height: 1.45;
 }
-.pricing-features li::before {
+.demo-proof-item::before {
   content: '✓';
-  color: var(--accent);
-  font-weight: 600;
-  flex-shrink: 0;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--green);
   margin-top: 1px;
+  flex-shrink: 0;
 }
-.pricing-card .btn { width: 100%; justify-content: center; }
 
-/* ===== FOUNDER ===== */
-.founder { padding: 96px 0; }
-.founder-grid {
+/* ── MATH ── */
+.math-layout {
   display: grid;
-  grid-template-columns: auto 1fr;
-  gap: 56px;
-  align-items: center;
-  max-width: 860px;
-  margin: 0 auto;
+  grid-template-columns: 1fr 1fr;
+  border: 2px solid var(--ink);
+  margin-top: 40px;
 }
-.founder-photo {
-  position: relative;
+.math-col { padding: 40px 36px; }
+.math-col + .math-col { border-left: 2px solid var(--ink); background: var(--ink); }
+.math-col h3 {
+  font-family: var(--hed);
+  font-weight: 800;
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink3);
+  margin-bottom: 24px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--rule);
 }
-.founder-photo img {
-  width: 240px;
-  height: 300px;
-  object-fit: cover;
-  border-radius: 16px;
-  box-shadow: 0 16px 48px rgba(26,143,255,0.1), 0 0 60px rgba(26,143,255,0.05);
-}
-.founder-text blockquote {
-  font-family: var(--fh);
-  font-weight: 600;
-  font-size: clamp(20px, 2.2vw, 26px);
-  line-height: 1.4;
-  color: var(--white);
-  margin-bottom: 20px;
-}
-.founder-text blockquote::before { content: '\201C'; }
-.founder-text blockquote::after { content: '\201D'; }
-.founder-body {
-  font-size: 15px;
-  color: var(--muted);
-  line-height: 1.75;
-  margin-bottom: 20px;
-}
-.founder-name {
-  font-family: var(--fh);
-  font-weight: 600;
-  font-size: 15px;
-  color: var(--white);
-}
-
-/* ===== FAQ ===== */
-.faq { padding: 96px 0; }
-.faq-header { margin-bottom: 48px; }
-.faq-header h2 { font-size: clamp(2rem, 3.5vw, 2.5rem); }
-.faq-list {
-  max-width: 720px;
-  margin: 0 auto;
-}
-.faq-item {
-  border-bottom: 1px solid var(--border);
-}
-.faq-question {
-  width: 100%;
+.math-col + .math-col h3 { color: rgba(255,255,255,0.3); border-bottom-color: rgba(255,255,255,0.08); }
+.math-row {
   display: flex;
   justify-content: space-between;
-  align-items: center;
-  padding: 24px 0;
-  font-family: var(--fb);
-  font-weight: 500;
-  font-size: 16px;
-  color: var(--white);
-  text-align: left;
-  cursor: pointer;
-  background: none;
-  border: none;
+  align-items: baseline;
+  padding: 13px 0;
+  border-bottom: 1px solid var(--rule);
+  gap: 12px;
 }
-.faq-icon {
-  width: 24px;
-  height: 24px;
-  position: relative;
-  flex-shrink: 0;
-  margin-left: 16px;
+.math-row:last-child { border-bottom: none; }
+.math-col + .math-col .math-row { border-bottom-color: rgba(255,255,255,0.07); }
+.math-label { font-size: 14px; color: var(--ink2); }
+.math-col + .math-col .math-label { color: rgba(255,255,255,0.5); }
+.math-val {
+  font-family: var(--hed);
+  font-weight: 800;
+  font-size: 20px;
+  letter-spacing: -0.025em;
+  color: var(--ink);
+  text-align: right;
 }
-.faq-icon::before,
-.faq-icon::after {
-  content: '';
-  position: absolute;
-  background: var(--muted);
-  transition: transform .35s var(--ease);
-}
-.faq-icon::before {
-  width: 16px;
-  height: 2px;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-}
-.faq-icon::after {
-  width: 2px;
-  height: 16px;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-}
-.faq-item.open .faq-icon::after {
-  transform: translate(-50%, -50%) rotate(90deg);
-}
-.faq-item.open .faq-icon::before {
-  transform: translate(-50%, -50%) rotate(90deg);
-}
-.faq-answer {
-  max-height: 0;
-  overflow: hidden;
-  transition: max-height .4s var(--ease);
-}
-.faq-answer-inner {
-  padding: 0 0 24px;
-  font-size: 15px;
-  color: var(--muted);
-  line-height: 1.75;
+.math-col + .math-col .math-val { color: #fff; }
+.math-val.result {
+  font-size: 34px;
+  color: var(--green);
 }
 
-/* ===== FINAL CTA ===== */
-.final-cta {
-  padding: 96px 0;
-  text-align: center;
-  position: relative;
-  overflow: hidden;
+/* MATH callout below the table */
+.math-callout {
+  margin-top: 24px;
+  padding: 20px 24px;
+  background: var(--paper2);
+  border-left: 4px solid var(--ink);
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  flex-wrap: wrap;
 }
-.final-cta::before {
-  content: '';
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 600px;
-  height: 400px;
-  background: radial-gradient(ellipse, rgba(26,143,255,0.1) 0%, transparent 70%);
-  pointer-events: none;
+.math-callout strong {
+  font-family: var(--hed);
+  font-weight: 800;
+  font-size: 15px;
+  color: var(--ink);
+  letter-spacing: -0.01em;
+}
+.math-callout span { font-size: 14px; color: var(--ink2); font-style: italic; }
+
+/* ── PRICING ── */
+.pricing-table {
+  width: 100%;
+  border-collapse: collapse;
+  border: 2px solid var(--ink);
+  margin-top: 40px;
+  font-size: 14px;
+}
+.pricing-table th {
+  padding: 18px 22px;
+  text-align: left;
+  font-family: var(--hed);
+  font-weight: 800;
+  font-size: 12px;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  border-bottom: 2px solid var(--ink);
+  border-right: 1px solid var(--rule2);
+  background: var(--paper2);
+}
+.pricing-table th.fc { background: transparent; font-size: 11px; color: var(--ink3); }
+.pricing-table th.featured { background: var(--ink); color: var(--paper); }
+.pricing-table td {
+  padding: 13px 22px;
+  border-bottom: 1px solid var(--rule);
+  border-right: 1px solid var(--rule);
+  vertical-align: middle;
+  color: var(--ink2);
+  font-size: 13px;
+}
+.pricing-table td:last-child { border-right: none; }
+.pricing-table tr:last-child td { border-bottom: none; }
+.pricing-table td.featured { background: rgba(15,14,12,0.025); }
+
+.price-block { display: block; }
+.price-setup {
+  font-family: var(--hed);
+  font-weight: 800;
+  font-size: 24px;
+  letter-spacing: -0.03em;
+  color: var(--ink);
+  line-height: 1;
+}
+.price-mo { font-size: 12px; color: var(--ink3); display: block; margin-top: 3px; }
+
+.chk {
+  display: inline-block;
+  width: 16px; height: 16px;
+  background: var(--ink);
+  border-radius: 50%;
+  position: relative;
+  vertical-align: middle;
+}
+.chk::after {
+  content: '✓';
+  position: absolute; inset: 0;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 9px; color: var(--paper); font-weight: 700;
+}
+.dash {
+  display: inline-block;
+  width: 14px; height: 1.5px;
+  background: var(--ink4);
+  vertical-align: middle;
+}
+
+.tbl-cta-row td {
+  padding: 22px;
+  background: var(--paper2);
+  border-top: 2px solid var(--ink) !important;
+}
+.tbl-cta-row td.featured { background: var(--ink); }
+.tbl-btn {
+  display: inline-block;
+  padding: 10px 20px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  text-decoration: none;
+  border: 1.5px solid var(--ink);
+  color: var(--ink);
+  transition: all 0.15s;
+}
+.tbl-btn:hover { background: var(--ink); color: var(--paper); }
+.tbl-btn.inv { border-color: rgba(255,255,255,0.5); color: var(--paper); }
+.tbl-btn.inv:hover { background: var(--paper); color: var(--ink); }
+
+/* ── RISK ── */
+.risk-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+  border: 2px solid var(--ink);
+}
+.risk-left {
+  padding: 48px 40px;
+  border-right: 2px solid var(--ink);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 32px;
+}
+.risk-headline {
+  font-family: var(--hed);
+  font-weight: 800;
+  font-size: clamp(24px, 2.5vw, 36px);
+  letter-spacing: -0.025em;
+  line-height: 1.1;
+  color: var(--ink);
+  text-transform: uppercase;
+}
+.risk-body {
+  font-size: 16px;
+  color: var(--ink2);
+  line-height: 1.7;
+  font-style: italic;
+}
+.risk-right {
+  display: flex;
+  flex-direction: column;
+}
+.risk-point {
+  padding: 24px 28px;
+  border-bottom: 1px solid var(--rule2);
+  display: grid;
+  grid-template-columns: 28px 1fr;
+  gap: 14px;
+  align-items: start;
+}
+.risk-point:last-child { border-bottom: none; }
+.rp-num {
+  width: 28px; height: 28px;
+  background: var(--ink);
+  color: var(--paper);
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--hed);
+  font-weight: 800;
+  font-size: 13px;
+  flex-shrink: 0;
+}
+.rp-text strong { display: block; font-size: 14px; font-weight: 600; color: var(--ink); margin-bottom: 4px; }
+.rp-text span { font-size: 13px; color: var(--ink2); line-height: 1.55; }
+
+/* ── FINAL CTA ── */
+.final-cta {
+  padding: 96px 6vw;
+  background: var(--ink);
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: end;
+  gap: 60px;
 }
 .final-cta h2 {
-  font-size: clamp(2rem, 4.5vw, 3.5rem);
-  margin-bottom: 20px;
-  position: relative;
+  font-family: var(--hed);
+  font-weight: 800;
+  font-size: clamp(32px, 4vw, 58px);
+  line-height: 0.95;
+  letter-spacing: -0.04em;
+  color: var(--paper);
+  text-transform: uppercase;
+  margin-bottom: 18px;
 }
-.final-cta .sub {
-  margin: 0 auto 36px;
-  max-width: 520px;
-  text-align: center;
+.final-cta h2 em { font-style: normal; color: var(--blue); }
+.final-cta p {
+  font-size: 16px;
+  color: rgba(255,255,255,0.42);
+  font-style: italic;
+  line-height: 1.65;
+  max-width: 500px;
 }
-.final-cta .btn { position: relative; }
-.final-small {
-  font-size: 13px;
-  color: var(--muted);
-  margin-top: 16px;
-  position: relative;
+.final-cta-right {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 14px;
+  flex-shrink: 0;
+}
+.big-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--blue);
+  color: #fff;
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  padding: 18px 34px;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: opacity 0.15s;
+}
+.big-cta:hover { opacity: 0.88; }
+.cta-note {
+  font-size: 12px;
+  color: rgba(255,255,255,0.22);
+  letter-spacing: 0.04em;
+  text-align: right;
 }
 
-/* ===== FOOTER ===== */
-.footer {
-  padding: 36px 0;
-  border-top: 1px solid var(--border);
-}
-.footer-inner {
+footer {
+  background: var(--ink);
+  border-top: 1px solid rgba(255,255,255,0.07);
+  padding: 24px 6vw;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 20px;
-}
-.footer-left {
-  display: flex;
-  align-items: center;
   gap: 24px;
+  flex-wrap: wrap;
 }
-.footer-logo {
-  font-family: var(--fh);
-  font-weight: 800;
-  font-size: 22px;
-}
-.footer-logo .dot { color: var(--accent); }
-.footer-tagline {
-  font-size: 13px;
-  color: var(--muted);
-}
-.footer-links {
-  display: flex;
-  gap: 28px;
-}
-.footer-links a {
-  font-size: 13px;
-  color: var(--muted);
-  transition: color .25s;
-}
-.footer-links a:hover { color: var(--white); }
-.footer-copy {
-  font-size: 12px;
-  color: var(--muted);
+.footer-logo { font-family: var(--hed); font-weight: 800; font-size: 16px; letter-spacing: -0.02em; color: var(--paper); text-transform: uppercase; }
+footer p { font-size: 12px; color: rgba(255,255,255,0.2); }
+
+/* animations */
+@keyframes up {
+  from { opacity: 0; transform: translateY(14px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
 
-/* ===== RESPONSIVE ===== */
-@media (max-width: 768px) {
-  section { padding: 64px 0; }
-  .nav-links, .nav-cta { display: none; }
-  .hamburger { display: flex; }
-
-  .hero { padding: 120px 0 64px; }
-  .hero-grid {
-    grid-template-columns: 1fr;
-    gap: 36px;
-  }
-  .hero-image { order: -1; }
-  .hero-image img { height: 280px; }
-  .hero-sub { font-size: 16px; }
-  .hero-ctas { flex-direction: column; }
-  .hero-ctas .btn { width: fit-content; }
-
-  .stats-bar { padding: 40px 0; }
-  .stats-grid { flex-direction: column; gap: 32px; }
-  .stat-divider { width: 60px; height: 1px; }
-
-  .problem-grid { grid-template-columns: 1fr; gap: 36px; }
-  .problem-img img { height: 300px; }
-
-  .outcome-grid { grid-template-columns: 1fr; gap: 8px; }
-  .glass-callout { padding: 24px 20px; font-size: 15px; }
-
-  .steps-row {
-    flex-direction: column;
-    gap: 32px;
-    align-items: flex-start;
-    padding-left: 48px;
-  }
-  .steps-row::before {
-    top: 0;
-    bottom: 0;
-    left: 23px;
-    right: auto;
-    width: 1px;
-    height: auto;
-    border-top: none;
-    border-left: 2px dashed rgba(255,255,255,0.08);
-  }
-  .step {
-    text-align: left;
-    padding: 0;
-  }
-  .step-num {
-    position: absolute;
-    left: -48px;
-    margin: 0;
-  }
-
-  .pricing-grid {
-    grid-template-columns: 1fr;
-    max-width: 400px;
-  }
-
-  .founder-grid {
-    grid-template-columns: 1fr;
-    gap: 32px;
-    text-align: center;
-  }
-  .founder-photo { display: flex; justify-content: center; }
-  .founder-photo img { width: 180px; height: 220px; }
-
-  .faq-header { text-align: center; }
-
-  .footer-inner {
-    flex-direction: column;
-    text-align: center;
-    gap: 16px;
-  }
-  .footer-left { flex-direction: column; gap: 8px; }
+/* RESPONSIVE */
+@media (max-width: 980px) {
+  .hero { grid-template-columns: 1fr; min-height: auto; }
+  .hero-right { display: none; }
+  nav { grid-template-columns: 1fr auto; }
+  .nav-left { display: none; }
+  .process-outer { grid-template-columns: 1fr; }
+  .process-demo { order: -1; }
+  .math-layout { grid-template-columns: 1fr; }
+  .math-col + .math-col { border-left: none; border-top: 2px solid var(--ink); }
+  .risk-layout { grid-template-columns: 1fr; }
+  .risk-left { border-right: none; border-bottom: 2px solid var(--ink); }
+  .final-cta { grid-template-columns: 1fr; }
+  .final-cta-right { align-items: flex-start; }
+  .pricing-table { font-size: 12px; }
+  .pricing-table td, .pricing-table th { padding: 11px 14px; }
 }
 </style>
 </head>
 <body>
 
 <!-- NAV -->
-<nav class="nav" id="nav">
-  <div class="nav-inner">
-    <a href="#" class="nav-logo">Solvr<span class="dot">.</span></a>
-    <div class="nav-links">
-      <a href="#process">How It Works</a>
-      <a href="#pricing">Pricing</a>
-      <a href="#stats">Results</a>
-    </div>
-    <div class="nav-cta">
-      <a href="#cta" class="btn btn-md btn-fill">Get Your Free Demo</a>
-    </div>
-    <div class="hamburger" id="hamburger" aria-label="Menu" role="button" tabindex="0">
-      <span></span><span></span><span></span>
-    </div>
+<nav>
+  <div class="nav-left">
+    <a href="#problems">The problem</a>
+    <a href="#process">How it works</a>
+    <a href="#pricing">Pricing</a>
+  </div>
+  <div class="nav-logo">Solvr</div>
+  <div class="nav-right">
+    <a href="#contact" class="nav-cta">Get free demo</a>
   </div>
 </nav>
 
-<!-- MOBILE MENU -->
-<div class="mobile-menu" id="mobileMenu">
-  <a href="#process" class="mobile-nav-link">How It Works</a>
-  <a href="#pricing" class="mobile-nav-link">Pricing</a>
-  <a href="#stats" class="mobile-nav-link">Results</a>
-  <a href="#cta" class="btn btn-md btn-fill mobile-nav-link">Get Your Free Demo</a>
+<!-- ── HERO ── -->
+<div class="hero">
+  <div class="hero-left">
+    <div class="hero-dateline">Cosmetic Dentistry · US Mid-Size Cities</div>
+
+    <h1>More patients.<br><em>Zero</em> risk.</h1>
+
+    <div class="hero-proof">
+      <div class="hero-proof-line">
+        <span class="proof-stat">55%</span>
+        <span class="proof-label">of patients search on mobile — most dental sites weren't built for that</span>
+      </div>
+      <div class="hero-proof-line">
+        <span class="proof-stat">53%</span>
+        <span class="proof-label">abandon a site that takes over 3 seconds to load. Average dental site: 6–8 seconds</span>
+      </div>
+      <div class="hero-proof-line">
+        <span class="proof-stat">$4,000</span>
+        <span class="proof-label">average annual value of one cosmetic dental patient</span>
+      </div>
+    </div>
+
+    <div class="hero-bottom">
+      <p class="hero-deck">We find where your practice is losing patients online and build a working fix — before you spend a cent. You see the finished product first. Then you decide.</p>
+      <div class="hero-cta-wrap">
+        <a href="#contact" class="btn-primary">See your free demo built in 48hrs →</a>
+        <span class="hero-cta-note">No invoice. No obligation.</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="hero-right">
+    <p class="comparison-label">Before &amp; After</p>
+    <div class="phones-row">
+      <div>
+        <div class="phone phone-bad">
+          <div class="phone-notch"></div>
+          <div class="bad-screen">
+            <div class="bs-header">DENTAL CARE CENTER</div>
+            <div class="bs-nav"><span>Home</span><span>About</span><span>Services</span><span>Contact</span><span>Blog</span><span>FAQ</span></div>
+            <div class="bs-img">Welcome to Our Practice<br>[BANNER IMAGE]</div>
+            <div class="bs-txt">We are a full-service family dental practice dedicated to comprehensive care in a comfortable and relaxing environment for all ages...</div>
+            <div class="bs-overflow">Mon–Fri 8am–5pm · Tel: (555) 123-4567 · After hours: Voicemail only</div>
+            <div class="bs-hours">Weekend: Closed</div>
+            <div class="bs-btn">LEARN MORE ABOUT US</div>
+          </div>
+        </div>
+        <p class="phone-caption bad">Right now</p>
+      </div>
+      <div class="vs-mark">VS</div>
+      <div style="position:relative;">
+        <div class="phone phone-good">
+          <div class="phone-notch"></div>
+          <div class="good-screen">
+            <div class="gs-header"><span>Bright Smile Dental</span><a>Book Now</a></div>
+            <div class="gs-body">
+              <div class="gs-h1">Cape Town's #1<br>Cosmetic Dentist</div>
+              <div class="gs-sub">400+ happy patients. Free consult available today.</div>
+              <div class="gs-cta">📅 Book a Free Consultation</div>
+              <div class="gs-stars">★★★★★</div>
+              <div class="gs-review">"Best experience I've ever had!" — Sarah M.</div>
+            </div>
+            <div class="gs-grid">
+              <div class="gs-card"><strong>Veneers</strong><span>From $900</span></div>
+              <div class="gs-card"><strong>Whitening</strong><span>From $299</span></div>
+              <div class="gs-card"><strong>Implants</strong><span>From $2,400</span></div>
+              <div class="gs-card"><strong>Invisalign</strong><span>From $3,500</span></div>
+            </div>
+            <div class="gs-chat">💬</div>
+          </div>
+        </div>
+        <p class="phone-caption good">After Solvr</p>
+      </div>
+    </div>
+  </div>
 </div>
 
-<!-- HERO -->
-<section class="hero">
-  <div class="container">
-    <div class="hero-grid">
-      <div class="hero-text">
-        <h1 class="rv">When did you last check your website <span class="accent">on your phone?</span></h1>
-        <p class="hero-sub rv d1">Over half your patients search for dentists on mobile. Most dental websites were built for desktop. Right now, more than half the people searching for your practice are landing on a broken page — and booking someone else. We fix that. Free. Before you spend a cent.</p>
-        <div class="hero-ctas rv d2">
-          <a href="#cta" class="btn btn-lg btn-fill">See Your Free Demo →</a>
-          <a href="#process" class="btn btn-lg btn-ghost">How it works ↓</a>
-        </div>
-        <div class="trust-strip rv d3">
-          <div class="trust-item"><span class="trust-dot"></span>Built in 48 hours</div>
-          <div class="trust-item"><span class="trust-dot"></span>No obligation</div>
-          <div class="trust-item"><span class="trust-dot"></span>Live in 5 days</div>
+<!-- ── PROBLEMS: framed as money lost ── -->
+<section class="section" id="problems">
+  <div class="eyebrow">Where the money is going</div>
+  <h2 class="sec-h2">Your site is <em>costing you patients</em> every day</h2>
+
+  <div class="problems-pullquote">
+    <p>The average cosmetic dental patient is worth $4,000 a year. Each problem below is actively sending patients to a competitor who fixed it.</p>
+    <span>We check every practice against this list before reaching out. Three problems is normal. All six is common.</span>
+  </div>
+
+  <div class="problems-list">
+    <div class="problem-row">
+      <span class="prob-num">01</span>
+      <div class="prob-body">
+        <h4>Not mobile optimised</h4>
+        <p>55% of patients search on mobile. A site built for desktop delivers a broken, unreadable experience to more than half the people actively looking for you — before they've read a word. They leave and call someone else.</p>
+      </div>
+      <div class="prob-cost"><strong>Half your traffic</strong><span>lost before they read a word</span></div>
+    </div>
+    <div class="problem-row">
+      <span class="prob-num">02</span>
+      <div class="prob-body">
+        <h4>Loads too slowly</h4>
+        <p>53% of mobile visitors abandon a page that takes over 3 seconds. The average dental site loads in 6–8 seconds. That means more than half the traffic you're paying to reach — through Google, word of mouth, any channel — bounces before your site has even loaded.</p>
+      </div>
+      <div class="prob-cost"><strong>53% bounce</strong><span>before the page loads</span></div>
+    </div>
+    <div class="problem-row">
+      <span class="prob-num">03</span>
+      <div class="prob-body">
+        <h4>No way to contact you right now</h4>
+        <p>90% of patients expect an immediate response. If you're phone-only during business hours, every patient who searches at night, on a Saturday, or during lunch is booking with whoever they can reach right now. That's not you.</p>
+      </div>
+      <div class="prob-cost"><strong>After hours</strong><span>enquiries go to a competitor</span></div>
+    </div>
+    <div class="problem-row">
+      <span class="prob-num">04</span>
+      <div class="prob-body">
+        <h4>Reviews hidden or not there</h4>
+        <p>88% of people trust reviews as much as a personal referral. If a patient lands on your homepage and has to scroll to find social proof — or it isn't there at all — you've lost the trust battle before they've considered calling.</p>
+      </div>
+      <div class="prob-cost"><strong>No trust</strong><span>before they decide to leave</span></div>
+    </div>
+    <div class="problem-row">
+      <span class="prob-num">05</span>
+      <div class="prob-body">
+        <h4>Nothing to do above the fold</h4>
+        <p>Users spend 57% of their time above the fold. If there is no clear, obvious action the moment they land — one button, one CTA, one next step — most visitors leave without contacting you. The page answers no questions and asks for nothing.</p>
+      </div>
+      <div class="prob-cost"><strong>57% of time</strong><span>above the fold — no CTA</span></div>
+    </div>
+    <div class="problem-row">
+      <span class="prob-num">06</span>
+      <div class="prob-body">
+        <h4>Invisible on local Google search</h4>
+        <p>46% of all Google searches are local. Patients searching "cosmetic dentist [city]" who don't see you on page one don't know you exist. They're choosing between the practices who showed up. You're not in the conversation.</p>
+      </div>
+      <div class="prob-cost"><strong>Page 2</strong><span>means invisible to new patients</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ── PROCESS: demo as the centrepiece ── -->
+<section class="section section-alt" id="process">
+  <div class="eyebrow">How it works</div>
+  <h2 class="sec-h2">We build it first. You decide after.</h2>
+  <p class="sec-intro">This isn't a pitch. We build a working, finished version of your practice's patient page — using your real data — before you're asked for anything.</p>
+
+  <div class="process-outer">
+    <!-- LEFT COLUMN: steps 1, 3, 4 -->
+    <div class="process-steps">
+      <div class="process-step">
+        <span class="ps-num">01</span>
+        <div class="ps-body">
+          <h3>We audit your online presence</h3>
+          <p>We run your site through the six-point checklist. Mobile performance, page speed, local ranking, reviews, CTA, contact options. Every gap documented with evidence.</p>
         </div>
       </div>
-      <div class="hero-image rv d2">
-        <img src="https://images.unsplash.com/photo-1588776814546-1ffcf47267a5?w=1200&q=80" alt="Modern dental practice" loading="eager">
+      <div class="process-step">
+        <span class="ps-num">03</span>
+        <div class="ps-body">
+          <h3>You open it on your phone</h3>
+          <p>We send you the link. You see the before and after side by side — your current site vs what we built. If you don't love it, walk away. No invoice. No follow-up.</p>
+          <span class="ps-note">Zero obligation.</span>
+        </div>
+      </div>
+      <div class="process-step">
+        <span class="ps-num">04</span>
+        <div class="ps-body">
+          <h3>We go live in 5 days</h3>
+          <p>Booking widget, AI chat, review automation, and monthly reporting all connected. Your system live and working in under a week from the word go.</p>
+          <span class="ps-note">5 business days to launch.</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- RIGHT COLUMN: Step 02 — the demo, hero treatment -->
+    <div class="process-demo">
+      <div class="demo-eyebrow">Step 02 — The differentiator</div>
+      <div>
+        <div class="demo-headline">We build your<br>practice's demo.<br><em>Free. Before<br>you pay anything.</em></div>
+      </div>
+      <p class="demo-body">Using your real practice name, services, photos, and Google reviews, we build a complete mobile-first patient page. Not a template. Not a mockup. A working site, built specifically for your practice, that you can open on your phone and compare side by side with what you have now.</p>
+      <div class="demo-proof">
+        <div class="demo-proof-item">Built with your actual reviews and services — not placeholder content</div>
+        <div class="demo-proof-item">Mobile-perfect from day one — serves 55% more patients than your current site</div>
+        <div class="demo-proof-item">Ready in 48 hours — no meetings, no briefs, no back and forth first</div>
+        <div class="demo-proof-item">No invoice issued until you say yes</div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- STATS BAR -->
-<section class="stats-bar" id="stats">
-  <div class="container">
-    <div class="stats-grid">
-      <div class="stat-item rv">
-        <div class="stat-num" data-target="55" data-suffix="%">55%</div>
-        <div class="stat-label">of patients search on mobile</div>
-      </div>
-      <div class="stat-divider"></div>
-      <div class="stat-item rv d1">
-        <div class="stat-num" data-target="53" data-suffix="%">53%</div>
-        <div class="stat-label">abandon a slow site in 3 seconds</div>
-      </div>
-      <div class="stat-divider"></div>
-      <div class="stat-item rv d2">
-        <div class="stat-num" data-target="8" data-suffix="/10" data-fraction>8/10</div>
-        <div class="stat-label">patients leave without booking</div>
-      </div>
+<!-- ── MATH: before pricing ── -->
+<section class="section" id="math">
+  <div class="eyebrow">The math</div>
+  <h2 class="sec-h2">One new patient covers the fee. Every month.</h2>
+  <p class="sec-intro">On the call we always ask what a patient actually spends with you. Use your number. The conclusion is always the same.</p>
+
+  <div class="math-layout">
+    <div class="math-col">
+      <h3>Cosmetic dental patient value</h3>
+      <div class="math-row"><span class="math-label">Average visits per year</span><span class="math-val">2–3</span></div>
+      <div class="math-row"><span class="math-label">Average spend per visit</span><span class="math-val">$500–$1,500</span></div>
+      <div class="math-row"><span class="math-label">Annual value per patient</span><span class="math-val">up to $4,000</span></div>
+      <div class="math-row"><span class="math-label">Patients needed to cover Core</span><span class="math-val">1</span></div>
     </div>
+    <div class="math-col">
+      <h3>Your return on Core</h3>
+      <div class="math-row"><span class="math-label">Monthly investment</span><span class="math-val">$497</span></div>
+      <div class="math-row"><span class="math-label">Value of 1 new patient</span><span class="math-val">$4,000/yr</span></div>
+      <div class="math-row"><span class="math-label">Net after fee (1 patient/month)</span><span class="math-val result">$3,500+</span></div>
+    </div>
+  </div>
+
+  <div class="math-callout">
+    <strong>"$497/month. One new patient covers the fee and leaves $3,500+ net. Every single month."</strong>
+    <span>That's the pitch. The math is immediate. The only question is how many patients you're currently losing to the six problems above.</span>
   </div>
 </section>
 
-<!-- PROBLEM -->
-<section class="problem">
-  <div class="container">
-    <div class="problem-header rv">
-      <h2>Most dentists have never checked their own website on a phone.</h2>
-      <p class="sub">Most of their patients have. Most of them left.</p>
-    </div>
-    <div class="problem-grid">
-      <div class="problem-img rv">
-        <img src="https://images.unsplash.com/photo-1629909613654-28e377c37b09?w=800&q=80" alt="Dental practice interior" loading="lazy">
-      </div>
-      <div class="problem-cards">
-        <div class="problem-card rv">
-          <div class="problem-num">01</div>
-          <h3>More than half your patients are on mobile</h3>
-          <p>55% of patients search on their phone. If your site isn't built for that, you're invisible to more than half the people actively searching for you — right now, today.</p>
-        </div>
-        <div class="problem-card rv d1">
-          <div class="problem-num">02</div>
-          <h3>Slow pages send patients to your competitor</h3>
-          <p>53% of mobile visitors leave a site that takes longer than 3 seconds to load. The average dental site loads in 6–8 seconds. That patient didn't stop looking for a dentist. They just called someone else.</p>
-        </div>
-        <div class="problem-card rv d2">
-          <div class="problem-num">03</div>
-          <h3>No clear reason to book means no booking</h3>
-          <p>When a patient lands and nothing tells them what to do — no instant contact, no visible reviews, no easy next step — they leave. They were ready. You lost them to friction.</p>
-        </div>
-      </div>
-    </div>
-  </div>
+<!-- ── PRICING: after the math ── -->
+<section class="section section-alt" id="pricing">
+  <div class="eyebrow">Pricing</div>
+  <h2 class="sec-h2">Three tiers. All de-risked.</h2>
+  <p class="sec-intro">Every tier starts with the same free demo. You've already seen what we built before any of this applies.</p>
+
+  <table class="pricing-table">
+    <thead>
+      <tr>
+        <th class="fc">What's included</th>
+        <th>Starter</th>
+        <th class="featured">Core — Most popular</th>
+        <th>Premium</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td style="font-size:12px;font-weight:600;letter-spacing:0.04em;text-transform:uppercase;color:var(--ink3);">Investment</td>
+        <td>
+          <span class="price-block">
+            <span class="price-setup">$997</span>
+            <span class="price-mo">setup · then $297/mo</span>
+          </span>
+        </td>
+        <td class="featured">
+          <span class="price-block">
+            <span class="price-setup">$1,500</span>
+            <span class="price-mo">setup · then $497/mo</span>
+          </span>
+        </td>
+        <td>
+          <span class="price-block">
+            <span class="price-setup">$2,500</span>
+            <span class="price-mo">setup · then $400/mo + 10%</span>
+          </span>
+        </td>
+      </tr>
+      <tr>
+        <td>Mobile-first patient page, live in 5 days</td>
+        <td><span class="chk"></span></td><td class="featured"><span class="chk"></span></td><td><span class="chk"></span></td>
+      </tr>
+      <tr>
+        <td>Built with your real reviews &amp; services</td>
+        <td><span class="chk"></span></td><td class="featured"><span class="chk"></span></td><td><span class="chk"></span></td>
+      </tr>
+      <tr>
+        <td>Local SEO optimisation</td>
+        <td><span class="chk"></span></td><td class="featured"><span class="chk"></span></td><td><span class="chk"></span></td>
+      </tr>
+      <tr>
+        <td>Monthly performance report</td>
+        <td><span class="chk"></span></td><td class="featured"><span class="chk"></span></td><td><span class="chk"></span></td>
+      </tr>
+      <tr>
+        <td>Auto-responder — instant enquiry reply</td>
+        <td><span class="dash"></span></td><td class="featured"><span class="chk"></span></td><td><span class="chk"></span></td>
+      </tr>
+      <tr>
+        <td>AI chat widget (captures 11pm patients)</td>
+        <td><span class="dash"></span></td><td class="featured"><span class="chk"></span></td><td><span class="chk"></span></td>
+      </tr>
+      <tr>
+        <td>Booking widget — zero friction</td>
+        <td><span class="dash"></span></td><td class="featured"><span class="chk"></span></td><td><span class="chk"></span></td>
+      </tr>
+      <tr>
+        <td>Review automation (Google ranking climbs)</td>
+        <td><span class="dash"></span></td><td class="featured"><span class="chk"></span></td><td><span class="chk"></span></td>
+      </tr>
+      <tr>
+        <td>Monthly ROI dashboard</td>
+        <td><span class="dash"></span></td><td class="featured"><span class="chk"></span></td><td><span class="chk"></span></td>
+      </tr>
+      <tr>
+        <td>Google Ads management (Max personally)</td>
+        <td><span class="dash"></span></td><td class="featured"><span class="dash"></span></td><td><span class="chk"></span></td>
+      </tr>
+      <tr>
+        <td>10% performance fee — only above your baseline</td>
+        <td><span class="dash"></span></td><td class="featured"><span class="dash"></span></td><td><span class="chk"></span></td>
+      </tr>
+      <tr>
+        <td>Competitor monitoring monthly</td>
+        <td><span class="dash"></span></td><td class="featured"><span class="dash"></span></td><td><span class="chk"></span></td>
+      </tr>
+      <tr class="tbl-cta-row">
+        <td></td>
+        <td><a href="#contact" class="tbl-btn">Get started</a></td>
+        <td class="featured"><a href="#contact" class="tbl-btn inv">Get started</a></td>
+        <td><a href="#contact" class="tbl-btn">Get started</a></td>
+      </tr>
+    </tbody>
+  </table>
 </section>
 
-<!-- SOLUTION -->
-<section class="solution">
-  <div class="container">
-    <div class="solution-header rv">
-      <h2>We've already built you a better one. <span class="accent">Free.</span></h2>
-      <p class="sub">Before you pay anything. Before you commit to a single conversation. We build your practice a fully working patient page — mobile-perfect, fast, with your real reviews and your real services. You see it. Then you decide.</p>
-    </div>
-    <div class="glass-callout rv">
-      The free demo we build you — before you spend a cent — already serves the 55% of patients your current site is failing. That's not a promise. You see it yourself first.
-    </div>
-    <div class="outcome-grid">
-      <div class="outcome-row rv">
-        <span class="outcome-arrow">→</span>
-        <span class="outcome-text">Serves mobile patients perfectly — the 55% your current site is losing right now</span>
-      </div>
-      <div class="outcome-row rv d1">
-        <span class="outcome-arrow">→</span>
-        <span class="outcome-text">Loads in under 2 seconds — patients stay instead of bouncing to a competitor</span>
-      </div>
-      <div class="outcome-row rv d2">
-        <span class="outcome-arrow">→</span>
-        <span class="outcome-text">Your real Google reviews front and centre — instant trust before they scroll</span>
-      </div>
-      <div class="outcome-row rv d3">
-        <span class="outcome-arrow">→</span>
-        <span class="outcome-text">One clear action above the fold — patients know exactly what to do, immediately</span>
-      </div>
-      <div class="outcome-row rv d4">
-        <span class="outcome-arrow">→</span>
-        <span class="outcome-text">Ranked for local Google search — found before the practice down the street</span>
-      </div>
-    </div>
-    <div class="solution-cta rv">
-      <a href="#cta" class="btn btn-lg btn-fill">Request Your Free Demo →</a>
-    </div>
-  </div>
-</section>
+<!-- ── RISK REVERSAL: after pricing, seals the deal ── -->
+<section class="section">
+  <div class="eyebrow">Zero risk</div>
+  <h2 class="sec-h2">You've already seen the product. There's nothing to risk.</h2>
+  <p class="sec-intro">The demo is the guarantee. By the time pricing is relevant, you've already seen what we built for your specific practice.</p>
 
-<!-- PROCESS -->
-<section class="process" id="process">
-  <div class="container">
-    <div class="process-header rv">
-      <h2>See the result before you decide.</h2>
-      <p class="sub">That's our promise.</p>
+  <div class="risk-layout">
+    <div class="risk-left">
+      <h2 class="risk-headline">No invoice until you say yes. No contract. No lock-in.</h2>
+      <p class="risk-body">On Starter and Core, the demo is the entire risk reversal. You see the finished product before we ask for anything. If you don't love it, there's no invoice and no follow-up. It really is that simple. On Premium, our performance fee only applies to tracked revenue we generate above your current baseline — you only pay more when you make more.</p>
     </div>
-    <div class="steps-row">
-      <div class="step rv">
-        <div class="step-num">1</div>
-        <h3>We audit where you're losing patients</h3>
-        <p>Free. We look at exactly how your practice shows up on mobile right now. 48 hours. You do nothing.</p>
-      </div>
-      <div class="step rv d1">
-        <div class="step-num">2</div>
-        <h3>We build your demo</h3>
-        <p>A fully working patient page using your real reviews, your real services, your city. Built in 48 hours.</p>
-      </div>
-      <div class="step rv d2">
-        <div class="step-num">3</div>
-        <h3>You see it on a 20-minute call</h3>
-        <p>We walk through it together. No pitch. No pressure. Just the work.</p>
-      </div>
-      <div class="step rv d3">
-        <div class="step-num">4</div>
-        <h3>You decide</h3>
-        <p>Love it — we go live in 5 days. Don't love it — walk away. No invoice. No follow-up. We mean it.</p>
-      </div>
-      <div class="step rv d4">
-        <div class="step-num">5</div>
-        <h3>Patients start coming in</h3>
-        <p>Monthly report shows every call, every enquiry, every review gained. ROI you can actually see.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- PRICING -->
-<section class="pricing" id="pricing">
-  <div class="container">
-    <div class="pricing-header rv">
-      <h2>One new patient pays for months of this.</h2>
-    </div>
-    <div class="value-frame rv">
-      A cosmetic dental patient visits 2–3 times a year and spends $500–$1,500 per visit. That's up to $4,000 a year from one person. Our Core system is $497/month. One new patient a month covers our fee and leaves you $3,500+ in net revenue every single month.
-    </div>
-    <div class="pricing-grid">
-      <!-- Starter -->
-      <div class="pricing-card rv">
-        <div class="pricing-tier">Starter</div>
-        <div class="pricing-tagline">Get started</div>
-        <div class="pricing-amount">$997</div>
-        <div class="pricing-period">setup + $297/mo</div>
-        <ul class="pricing-features">
-          <li>Mobile-optimised patient page</li>
-          <li>Live on your domain in 5 days</li>
-          <li>Built with your real reviews and services</li>
-          <li>SEO-ready for local Google search</li>
-          <li>Monthly performance report</li>
-        </ul>
-        <a href="#cta" class="btn btn-md btn-ghost">Get Started</a>
-      </div>
-      <!-- Core (Featured) -->
-      <div class="pricing-card featured rv d1">
-        <div class="badge-popular">Most Popular</div>
-        <div class="pricing-tier">Core</div>
-        <div class="pricing-tagline">The full system</div>
-        <div class="pricing-amount">$1,500</div>
-        <div class="pricing-period">setup + $497/mo</div>
-        <ul class="pricing-features">
-          <li>Everything in Starter</li>
-          <li>Auto-responder — every enquiry gets instant reply</li>
-          <li>AI chat — captures patients at 11pm</li>
-          <li>Booking widget — zero friction to book</li>
-          <li>Review automation — ranking climbs automatically</li>
-          <li>Monthly ROI dashboard</li>
-        </ul>
-        <a href="#cta" class="btn btn-md btn-fill">Get Started →</a>
-      </div>
-      <!-- Premium -->
-      <div class="pricing-card rv d2">
-        <div class="pricing-tier">Premium</div>
-        <div class="pricing-tagline">Maximum growth</div>
-        <div class="pricing-amount">$2,500</div>
-        <div class="pricing-period">setup + performance fee</div>
-        <ul class="pricing-features">
-          <li>Everything in Core</li>
-          <li>Google Ads management</li>
-          <li>Performance-based — earn on results above baseline</li>
-          <li>Call tracking and attribution</li>
-          <li>Competitor monitoring monthly</li>
-        </ul>
-        <a href="#cta" class="btn btn-md btn-ghost">Talk to Us</a>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- FOUNDER -->
-<section class="founder">
-  <div class="container">
-    <div class="founder-grid rv">
-      <div class="founder-photo">
-        <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?w=400&q=80" alt="Max Hurrell, Founder of Solvr" loading="lazy">
-      </div>
-      <div class="founder-text">
-        <blockquote>I built Solvr because great practices were losing patients to competitors with worse service — just because their website didn't work on a phone.</blockquote>
-        <p class="founder-body">The fix isn't complicated. But nobody was offering to prove it before asking for money. So that's what we do. We build the proof first. You decide after.</p>
-        <p class="founder-name">Max Hurrell — Founder, Solvr.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- FAQ -->
-<section class="faq" id="faq">
-  <div class="container">
-    <div class="faq-header rv">
-      <h2>Questions.</h2>
-    </div>
-    <div class="faq-list">
-      <div class="faq-item rv">
-        <button class="faq-question">
-          <span>I already have a website.</span>
-          <span class="faq-icon"></span>
-        </button>
-        <div class="faq-answer">
-          <div class="faq-answer-inner">Most practices do. The question is whether it works on a phone — where 55% of your patients are searching. If it doesn't, you're invisible to more than half your potential patients before they read your name. The demo shows you exactly what they're seeing right now.</div>
+    <div class="risk-right">
+      <div class="risk-point">
+        <div class="rp-num">1</div>
+        <div class="rp-text">
+          <strong>Demo before any payment</strong>
+          <span>We build and deliver the full working demo before issuing any invoice. You see the finished product first, not a pitch deck.</span>
         </div>
       </div>
-      <div class="faq-item rv d1">
-        <button class="faq-question">
-          <span>How do I know this will actually get me more patients?</span>
-          <span class="faq-icon"></span>
-        </button>
-        <div class="faq-answer">
-          <div class="faq-answer-inner">You see the demo before paying anything. If it doesn't make you think 'we need this,' you walk away. No invoice. No follow-up. We only make money if you believe in what we built.</div>
+      <div class="risk-point">
+        <div class="rp-num">2</div>
+        <div class="rp-text">
+          <strong>Month to month — cancel anytime</strong>
+          <span>No annual contracts. No minimum term. No cancellation penalties. If results stop, so do payments.</span>
         </div>
       </div>
-      <div class="faq-item rv d2">
-        <button class="faq-question">
-          <span>I'm already running Google Ads.</span>
-          <span class="faq-icon"></span>
-        </button>
-        <div class="faq-answer">
-          <div class="faq-answer-inner">Even better. If your page isn't mobile-optimised, you're paying for patients who click, see a broken page on their phone, and leave in seconds. We fix the page — and can take over the ad account management on a performance basis as part of our Premium tier.</div>
-        </div>
-      </div>
-      <div class="faq-item rv d3">
-        <button class="faq-question">
-          <span>Where is your team based?</span>
-          <span class="faq-icon"></span>
-        </button>
-        <div class="faq-answer">
-          <div class="faq-answer-inner">We're a remote team. Our clients are across the US. The work speaks for itself — and you see it before we ask for anything.</div>
-        </div>
-      </div>
-      <div class="faq-item rv d4">
-        <button class="faq-question">
-          <span>How long does it take?</span>
-          <span class="faq-icon"></span>
-        </button>
-        <div class="faq-answer">
-          <div class="faq-answer-inner">Demo ready in 48 hours. Live on your domain in 5 business days if you choose to proceed.</div>
+      <div class="risk-point">
+        <div class="rp-num">3</div>
+        <div class="rp-text">
+          <strong>Performance fee only on new revenue</strong>
+          <span>On Premium, the 10% is calculated only on tracked revenue above your month-one baseline. We earn when you earn. Not before.</span>
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- FINAL CTA -->
-<section class="final-cta" id="cta">
-  <div class="container">
-    <h2 class="rv">Find out how many patients your site is <span class="accent">losing right now.</span></h2>
-    <p class="sub rv d1">We audit your practice and build your demo in 48 hours. Free. No obligation. No hard sell.</p>
-    <div class="rv d2">
-      <a href="mailto:hello@solvr.com" class="btn btn-lg btn-fill">Request Your Free Demo →</a>
-    </div>
-    <p class="final-small rv d3">Takes 2 minutes. We handle everything else.</p>
+<!-- ── FINAL CTA ── -->
+<div class="final-cta" id="contact">
+  <div>
+    <h2>We'll build your demo<br>in <em>48 hours.</em><br>Free.</h2>
+    <p>No briefing doc. No meetings first. No payment. We audit your current site, build a working mobile-optimised version using your real practice data, and send you the link. You open it on your phone. Then you decide.</p>
   </div>
-</section>
+  <div class="final-cta-right">
+    <a href="mailto:hello@solvr.agency" class="big-cta">Get your free demo →</a>
+    <p class="cta-note">No invoice · No obligation · 48hr turnaround</p>
+  </div>
+</div>
 
-<!-- FOOTER -->
-<footer class="footer">
-  <div class="container">
-    <div class="footer-inner">
-      <div class="footer-left">
-        <span class="footer-logo">Solvr<span class="dot">.</span></span>
-        <span class="footer-tagline">Patient acquisition for cosmetic dental practices.</span>
-      </div>
-      <div class="footer-links">
-        <a href="#process">How It Works</a>
-        <a href="#pricing">Pricing</a>
-        <a href="#faq">FAQ</a>
-      </div>
-      <div class="footer-copy">&copy; 2026 Solvr. All rights reserved.</div>
-    </div>
-  </div>
+<footer>
+  <div class="footer-logo">Solvr</div>
+  <p>Helping cosmetic dental practices win more patients online.</p>
+  <p>© 2025 Solvr.</p>
 </footer>
 
-<script>
-// Sticky nav
-const nav = document.getElementById('nav');
-window.addEventListener('scroll', () => {
-  nav.classList.toggle('scrolled', window.scrollY > 40);
-}, { passive: true });
-
-// Mobile menu
-const hamburger = document.getElementById('hamburger');
-const mobileMenu = document.getElementById('mobileMenu');
-hamburger.addEventListener('click', () => {
-  hamburger.classList.toggle('open');
-  mobileMenu.classList.toggle('open');
-  document.body.style.overflow = mobileMenu.classList.contains('open') ? 'hidden' : '';
-});
-document.querySelectorAll('.mobile-nav-link').forEach(link => {
-  link.addEventListener('click', () => {
-    hamburger.classList.remove('open');
-    mobileMenu.classList.remove('open');
-    document.body.style.overflow = '';
-  });
-});
-
-// Reveal on scroll
-const revealEls = document.querySelectorAll('.rv');
-const revealObs = new IntersectionObserver((entries) => {
-  entries.forEach(e => {
-    if (e.isIntersecting) {
-      e.target.classList.add('vis');
-      revealObs.unobserve(e.target);
-    }
-  });
-}, { threshold: 0.1 });
-revealEls.forEach(el => revealObs.observe(el));
-
-// Stats count-up
-const statNums = document.querySelectorAll('.stat-num');
-let statsCounted = false;
-function countUp(el) {
-  const target = parseInt(el.dataset.target);
-  const suffix = el.dataset.suffix || '';
-  const duration = 2000;
-  const start = performance.now();
-  el.textContent = '0' + suffix;
-  function step(now) {
-    const elapsed = now - start;
-    const progress = Math.min(elapsed / duration, 1);
-    const eased = 1 - Math.pow(1 - progress, 3);
-    const current = Math.round(eased * target);
-    el.textContent = current + suffix;
-    if (progress < 1) requestAnimationFrame(step);
-  }
-  requestAnimationFrame(step);
-}
-const statsObs = new IntersectionObserver((entries) => {
-  entries.forEach(e => {
-    if (e.isIntersecting && !statsCounted) {
-      statsCounted = true;
-      statNums.forEach(el => countUp(el));
-      statsObs.disconnect();
-    }
-  });
-}, { threshold: 0.3 });
-statNums.forEach(el => statsObs.observe(el));
-// 4s fallback
-setTimeout(() => {
-  if (!statsCounted) {
-    statsCounted = true;
-    statNums.forEach(el => countUp(el));
-  }
-}, 4000);
-
-// FAQ accordion
-document.querySelectorAll('.faq-question').forEach(btn => {
-  btn.addEventListener('click', () => {
-    const item = btn.parentElement;
-    const answer = item.querySelector('.faq-answer');
-    const isOpen = item.classList.contains('open');
-    // Close all
-    document.querySelectorAll('.faq-item.open').forEach(openItem => {
-      openItem.classList.remove('open');
-      openItem.querySelector('.faq-answer').style.maxHeight = '0';
-    });
-    // Toggle current
-    if (!isOpen) {
-      item.classList.add('open');
-      answer.style.maxHeight = answer.scrollHeight + 'px';
-    }
-  });
-});
-</script>
 </body>
 </html>
