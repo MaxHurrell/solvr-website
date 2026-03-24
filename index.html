@@ -1,0 +1,1269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Solvr — Patient Acquisition for Cosmetic Dental Practices</title>
+<meta name="description" content="Over half your patients search on mobile. Most dental sites weren't built for that. We fix it — free — before you spend a cent.">
+<meta name="theme-color" content="#05080F">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%2305080F'/><text x='50' y='68' font-family='sans-serif' font-size='50' font-weight='bold' fill='%231A8FFF' text-anchor='middle'>S.</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;800&family=Instrument+Sans:wght@400;500&display=swap" rel="stylesheet">
+<style>
+@property --angle {
+  syntax: '<angle>';
+  initial-value: 0deg;
+  inherits: false;
+}
+:root {
+  --bg: #05080F;
+  --surface: #0D1117;
+  --surface-2: #131A24;
+  --border: rgba(255,255,255,0.06);
+  --white: #EEF2FF;
+  --muted: #6B7A99;
+  --accent: #1A8FFF;
+  --accent-glow: rgba(26,143,255,0.15);
+  --green: #00C97A;
+  --fh: 'Bricolage Grotesque', sans-serif;
+  --fb: 'Instrument Sans', sans-serif;
+  --ease: cubic-bezier(.4,0,.2,1);
+  --mw: 1140px;
+  --pill: 50px;
+}
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--bg);
+  color: var(--white);
+  font-family: var(--fb);
+  font-weight: 400;
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+  position: relative;
+}
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.03;
+  z-index: 9999;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+img { max-width:100%; display:block; }
+a { text-decoration:none; color:inherit; }
+button { cursor:pointer; border:none; background:none; font-family:inherit; }
+ul { list-style:none; }
+
+.container { max-width: var(--mw); margin: 0 auto; padding: 0 24px; }
+h1, h2, h3 { font-family: var(--fh); font-weight: 800; line-height: 1.05; color: var(--white); }
+h1 { font-size: clamp(2.5rem, 5.5vw, 4.25rem); }
+h2 { font-size: clamp(1.75rem, 4vw, 3rem); }
+h3 { font-size: clamp(1rem, 1.8vw, 1.25rem); font-weight: 600; }
+.sub { font-size: clamp(15px, 1.5vw, 18px); color: var(--muted); line-height: 1.75; max-width: 560px; }
+.accent { color: var(--accent); }
+section { padding: 96px 0; }
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  border-radius: var(--pill);
+  font-family: var(--fb);
+  font-weight: 500;
+  transition: all .3s var(--ease);
+  cursor: pointer;
+  white-space: nowrap;
+  font-size: 0.92rem;
+}
+.btn-lg { padding: 16px 36px; font-size: 1rem; }
+.btn-md { padding: 12px 28px; font-size: 0.9rem; }
+.btn-fill {
+  background: var(--accent);
+  color: #fff;
+  box-shadow: 0 4px 20px rgba(26,143,255,0.2);
+}
+.btn-fill:hover {
+  background: #1478D4;
+  transform: translateY(-2px);
+  box-shadow: 0 0 28px rgba(26,143,255,0.45);
+}
+.btn-ghost {
+  border: 1px solid rgba(255,255,255,0.12);
+  color: var(--white);
+}
+.btn-ghost:hover {
+  border-color: var(--accent);
+  background: rgba(26,143,255,0.04);
+}
+
+/* Reveal animations */
+.rv { opacity:0; transform:translateY(24px); transition: opacity .6s var(--ease), transform .6s var(--ease); }
+.rv.vis { opacity:1; transform:translateY(0); }
+.d1{transition-delay:.08s} .d2{transition-delay:.16s} .d3{transition-delay:.24s} .d4{transition-delay:.32s} .d5{transition-delay:.4s}
+
+/* ===== NAV ===== */
+.nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+  padding: 18px 0;
+  transition: all .35s var(--ease);
+}
+.nav.scrolled {
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  background: rgba(5,8,15,0.85);
+  border-bottom: 1px solid var(--border);
+  padding: 12px 0;
+}
+.nav-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: var(--mw);
+  margin: 0 auto;
+  padding: 0 24px;
+}
+.nav-logo {
+  font-family: var(--fh);
+  font-weight: 800;
+  font-size: 28px;
+  color: var(--white);
+}
+.nav-logo .dot { color: var(--accent); }
+.nav-links {
+  display: flex;
+  gap: 36px;
+  align-items: center;
+}
+.nav-links a {
+  font-family: var(--fb);
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--muted);
+  transition: color .25s;
+}
+.nav-links a:hover { color: var(--white); }
+.nav-cta { display: flex; align-items: center; }
+.hamburger {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  cursor: pointer;
+  z-index: 1001;
+  padding: 8px;
+}
+.hamburger span {
+  display: block;
+  width: 22px;
+  height: 2px;
+  background: var(--white);
+  transition: all .3s var(--ease);
+}
+.hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.hamburger.open span:nth-child(2) { opacity: 0; }
+.hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+.mobile-menu {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(5,8,15,0.96);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  z-index: 999;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 32px;
+}
+.mobile-menu.open { display: flex; }
+.mobile-menu a {
+  font-family: var(--fb);
+  font-size: 18px;
+  color: var(--white);
+  font-weight: 400;
+}
+.mobile-menu .btn { margin-top: 12px; }
+
+/* ===== HERO ===== */
+.hero {
+  padding: 160px 0 96px;
+  position: relative;
+  overflow: hidden;
+}
+.hero::before {
+  content: '';
+  position: absolute;
+  top: -100px;
+  left: -200px;
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(circle, rgba(26,143,255,0.08) 0%, transparent 70%);
+  pointer-events: none;
+}
+.hero-grid {
+  display: grid;
+  grid-template-columns: 58% 42%;
+  gap: 48px;
+  align-items: center;
+}
+.hero-text h1 { margin-bottom: 24px; }
+.hero-sub {
+  font-size: 18px;
+  color: var(--muted);
+  line-height: 1.75;
+  max-width: 500px;
+  margin-bottom: 36px;
+}
+.hero-ctas {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-bottom: 36px;
+}
+.trust-strip {
+  display: flex;
+  gap: 28px;
+  flex-wrap: wrap;
+}
+.trust-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  color: var(--muted);
+}
+.trust-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--green);
+  box-shadow: 0 0 8px rgba(0,201,122,0.4);
+}
+.hero-image {
+  position: relative;
+}
+.hero-image img {
+  border-radius: 20px;
+  width: 100%;
+  height: 480px;
+  object-fit: cover;
+  box-shadow: 0 20px 60px rgba(26,143,255,0.12), 0 0 80px rgba(26,143,255,0.06);
+}
+
+/* ===== STATS BAR ===== */
+.stats-bar {
+  background: var(--surface);
+  padding: 56px 0;
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+}
+.stats-grid {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.stat-item {
+  flex: 1;
+  text-align: center;
+  padding: 0 40px;
+}
+.stat-divider {
+  width: 1px;
+  height: 64px;
+  background: var(--border);
+  flex-shrink: 0;
+}
+.stat-num {
+  font-family: var(--fh);
+  font-weight: 800;
+  font-size: clamp(2.5rem, 4.5vw, 3.5rem);
+  color: var(--accent);
+  line-height: 1;
+  margin-bottom: 8px;
+}
+.stat-label {
+  font-size: 15px;
+  color: var(--muted);
+  max-width: 200px;
+  margin: 0 auto;
+}
+
+/* ===== PROBLEM ===== */
+.problem { padding: 96px 0; }
+.problem-header { text-align: center; margin-bottom: 64px; }
+.problem-header h2 { margin-bottom: 12px; }
+.problem-header .sub { margin: 0 auto; }
+.problem-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 48px;
+  align-items: center;
+}
+.problem-img img {
+  border-radius: 16px;
+  width: 100%;
+  height: 520px;
+  object-fit: cover;
+}
+.problem-cards { display: flex; flex-direction: column; gap: 0; }
+.problem-card {
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: 0;
+  padding: 28px 24px;
+  position: relative;
+}
+.problem-card + .problem-card { border-top: none; }
+/* Corner decorator marks */
+.problem-card::before,
+.problem-card::after {
+  content: '';
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  pointer-events: none;
+}
+.problem-card::before {
+  top: -1px;
+  right: -1px;
+  border-top: 2px solid var(--accent);
+  border-right: 2px solid var(--accent);
+}
+.problem-card::after {
+  bottom: -1px;
+  left: -1px;
+  border-bottom: 2px solid var(--accent);
+  border-left: 2px solid var(--accent);
+}
+.problem-num {
+  font-family: var(--fh);
+  font-weight: 800;
+  font-size: 13px;
+  color: var(--accent);
+  margin-bottom: 10px;
+  letter-spacing: 1px;
+}
+.problem-card h3 { margin-bottom: 8px; font-size: 16px; }
+.problem-card p { font-size: 14px; color: var(--muted); line-height: 1.7; }
+
+/* ===== SOLUTION ===== */
+.solution { padding: 96px 0; }
+.solution-header { text-align: center; margin-bottom: 48px; }
+.solution-header h2 { margin-bottom: 16px; }
+.solution-header .sub { margin: 0 auto; max-width: 620px; }
+.glass-callout {
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  background: rgba(26,143,255,0.05);
+  border: 1px solid rgba(26,143,255,0.18);
+  border-radius: 16px;
+  padding: 32px 36px;
+  max-width: 780px;
+  margin: 0 auto 56px;
+  font-size: 16px;
+  line-height: 1.75;
+  color: var(--white);
+  text-align: center;
+}
+.outcome-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px 40px;
+  max-width: 860px;
+  margin: 0 auto 48px;
+}
+.outcome-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 12px 0;
+}
+.outcome-arrow {
+  color: var(--accent);
+  font-size: 18px;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+.outcome-text {
+  font-size: 15px;
+  color: var(--muted);
+  line-height: 1.65;
+}
+.solution-cta { text-align: center; }
+
+/* ===== PROCESS ===== */
+.process { padding: 96px 0; }
+.process-header { text-align: center; margin-bottom: 64px; }
+.process-header h2 { margin-bottom: 8px; }
+.process-header .sub { margin: 0 auto; }
+.steps-row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  position: relative;
+  gap: 0;
+}
+.steps-row::before {
+  content: '';
+  position: absolute;
+  top: 24px;
+  left: 48px;
+  right: 48px;
+  height: 1px;
+  border-top: 2px dashed rgba(255,255,255,0.08);
+}
+.step {
+  flex: 1;
+  text-align: center;
+  position: relative;
+  padding: 0 12px;
+}
+.step-num {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: var(--surface-2);
+  border: 2px solid var(--accent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--fh);
+  font-weight: 800;
+  font-size: 16px;
+  color: var(--accent);
+  margin: 0 auto 20px;
+  position: relative;
+  z-index: 2;
+}
+.step h3 {
+  font-size: 15px;
+  margin-bottom: 8px;
+  color: var(--white);
+}
+.step p {
+  font-size: 13px;
+  color: var(--muted);
+  line-height: 1.65;
+}
+
+/* ===== PRICING ===== */
+.pricing { padding: 96px 0; }
+.pricing-header { text-align: center; margin-bottom: 40px; }
+.pricing-header h2 { margin-bottom: 16px; }
+.value-frame {
+  background: var(--surface-2);
+  border-left: 3px solid var(--accent);
+  border-radius: 12px;
+  padding: 28px 32px;
+  max-width: 860px;
+  margin: 0 auto 56px;
+  font-size: 15px;
+  line-height: 1.75;
+  color: var(--muted);
+}
+.pricing-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  max-width: 980px;
+  margin: 0 auto;
+}
+.pricing-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 36px 28px;
+  display: flex;
+  flex-direction: column;
+}
+.pricing-card.featured {
+  position: relative;
+  background: var(--surface);
+  border: none;
+}
+.pricing-card.featured::before {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  border-radius: 18px;
+  padding: 2px;
+  background: conic-gradient(from var(--angle), var(--accent), rgba(26,143,255,0.15), var(--accent), rgba(26,143,255,0.15), var(--accent));
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  animation: rotate-border 4s linear infinite;
+}
+@keyframes rotate-border {
+  to { --angle: 360deg; }
+}
+.badge-popular {
+  display: inline-block;
+  background: var(--accent);
+  color: #fff;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  padding: 5px 14px;
+  border-radius: var(--pill);
+  margin-bottom: 16px;
+  width: fit-content;
+}
+.pricing-tier {
+  font-family: var(--fh);
+  font-weight: 800;
+  font-size: 20px;
+  margin-bottom: 4px;
+}
+.pricing-tagline {
+  font-size: 13px;
+  color: var(--muted);
+  margin-bottom: 20px;
+}
+.pricing-amount {
+  font-family: var(--fh);
+  font-weight: 800;
+  font-size: 40px;
+  color: var(--white);
+  margin-bottom: 2px;
+}
+.pricing-period {
+  font-size: 13px;
+  color: var(--muted);
+  margin-bottom: 28px;
+}
+.pricing-features {
+  flex: 1;
+  margin-bottom: 28px;
+}
+.pricing-features li {
+  font-size: 14px;
+  color: var(--muted);
+  padding: 6px 0;
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+.pricing-features li::before {
+  content: '✓';
+  color: var(--accent);
+  font-weight: 600;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+.pricing-card .btn { width: 100%; justify-content: center; }
+
+/* ===== FOUNDER ===== */
+.founder { padding: 96px 0; }
+.founder-grid {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 56px;
+  align-items: center;
+  max-width: 860px;
+  margin: 0 auto;
+}
+.founder-photo {
+  position: relative;
+}
+.founder-photo img {
+  width: 240px;
+  height: 300px;
+  object-fit: cover;
+  border-radius: 16px;
+  box-shadow: 0 16px 48px rgba(26,143,255,0.1), 0 0 60px rgba(26,143,255,0.05);
+}
+.founder-text blockquote {
+  font-family: var(--fh);
+  font-weight: 600;
+  font-size: clamp(20px, 2.2vw, 26px);
+  line-height: 1.4;
+  color: var(--white);
+  margin-bottom: 20px;
+}
+.founder-text blockquote::before { content: '\201C'; }
+.founder-text blockquote::after { content: '\201D'; }
+.founder-body {
+  font-size: 15px;
+  color: var(--muted);
+  line-height: 1.75;
+  margin-bottom: 20px;
+}
+.founder-name {
+  font-family: var(--fh);
+  font-weight: 600;
+  font-size: 15px;
+  color: var(--white);
+}
+
+/* ===== FAQ ===== */
+.faq { padding: 96px 0; }
+.faq-header { margin-bottom: 48px; }
+.faq-header h2 { font-size: clamp(2rem, 3.5vw, 2.5rem); }
+.faq-list {
+  max-width: 720px;
+  margin: 0 auto;
+}
+.faq-item {
+  border-bottom: 1px solid var(--border);
+}
+.faq-question {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 24px 0;
+  font-family: var(--fb);
+  font-weight: 500;
+  font-size: 16px;
+  color: var(--white);
+  text-align: left;
+  cursor: pointer;
+  background: none;
+  border: none;
+}
+.faq-icon {
+  width: 24px;
+  height: 24px;
+  position: relative;
+  flex-shrink: 0;
+  margin-left: 16px;
+}
+.faq-icon::before,
+.faq-icon::after {
+  content: '';
+  position: absolute;
+  background: var(--muted);
+  transition: transform .35s var(--ease);
+}
+.faq-icon::before {
+  width: 16px;
+  height: 2px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.faq-icon::after {
+  width: 2px;
+  height: 16px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.faq-item.open .faq-icon::after {
+  transform: translate(-50%, -50%) rotate(90deg);
+}
+.faq-item.open .faq-icon::before {
+  transform: translate(-50%, -50%) rotate(90deg);
+}
+.faq-answer {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height .4s var(--ease);
+}
+.faq-answer-inner {
+  padding: 0 0 24px;
+  font-size: 15px;
+  color: var(--muted);
+  line-height: 1.75;
+}
+
+/* ===== FINAL CTA ===== */
+.final-cta {
+  padding: 96px 0;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.final-cta::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 600px;
+  height: 400px;
+  background: radial-gradient(ellipse, rgba(26,143,255,0.1) 0%, transparent 70%);
+  pointer-events: none;
+}
+.final-cta h2 {
+  font-size: clamp(2rem, 4.5vw, 3.5rem);
+  margin-bottom: 20px;
+  position: relative;
+}
+.final-cta .sub {
+  margin: 0 auto 36px;
+  max-width: 520px;
+  text-align: center;
+}
+.final-cta .btn { position: relative; }
+.final-small {
+  font-size: 13px;
+  color: var(--muted);
+  margin-top: 16px;
+  position: relative;
+}
+
+/* ===== FOOTER ===== */
+.footer {
+  padding: 36px 0;
+  border-top: 1px solid var(--border);
+}
+.footer-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+.footer-left {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+.footer-logo {
+  font-family: var(--fh);
+  font-weight: 800;
+  font-size: 22px;
+}
+.footer-logo .dot { color: var(--accent); }
+.footer-tagline {
+  font-size: 13px;
+  color: var(--muted);
+}
+.footer-links {
+  display: flex;
+  gap: 28px;
+}
+.footer-links a {
+  font-size: 13px;
+  color: var(--muted);
+  transition: color .25s;
+}
+.footer-links a:hover { color: var(--white); }
+.footer-copy {
+  font-size: 12px;
+  color: var(--muted);
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 768px) {
+  section { padding: 64px 0; }
+  .nav-links, .nav-cta { display: none; }
+  .hamburger { display: flex; }
+
+  .hero { padding: 120px 0 64px; }
+  .hero-grid {
+    grid-template-columns: 1fr;
+    gap: 36px;
+  }
+  .hero-image { order: -1; }
+  .hero-image img { height: 280px; }
+  .hero-sub { font-size: 16px; }
+  .hero-ctas { flex-direction: column; }
+  .hero-ctas .btn { width: fit-content; }
+
+  .stats-bar { padding: 40px 0; }
+  .stats-grid { flex-direction: column; gap: 32px; }
+  .stat-divider { width: 60px; height: 1px; }
+
+  .problem-grid { grid-template-columns: 1fr; gap: 36px; }
+  .problem-img img { height: 300px; }
+
+  .outcome-grid { grid-template-columns: 1fr; gap: 8px; }
+  .glass-callout { padding: 24px 20px; font-size: 15px; }
+
+  .steps-row {
+    flex-direction: column;
+    gap: 32px;
+    align-items: flex-start;
+    padding-left: 48px;
+  }
+  .steps-row::before {
+    top: 0;
+    bottom: 0;
+    left: 23px;
+    right: auto;
+    width: 1px;
+    height: auto;
+    border-top: none;
+    border-left: 2px dashed rgba(255,255,255,0.08);
+  }
+  .step {
+    text-align: left;
+    padding: 0;
+  }
+  .step-num {
+    position: absolute;
+    left: -48px;
+    margin: 0;
+  }
+
+  .pricing-grid {
+    grid-template-columns: 1fr;
+    max-width: 400px;
+  }
+
+  .founder-grid {
+    grid-template-columns: 1fr;
+    gap: 32px;
+    text-align: center;
+  }
+  .founder-photo { display: flex; justify-content: center; }
+  .founder-photo img { width: 180px; height: 220px; }
+
+  .faq-header { text-align: center; }
+
+  .footer-inner {
+    flex-direction: column;
+    text-align: center;
+    gap: 16px;
+  }
+  .footer-left { flex-direction: column; gap: 8px; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav" id="nav">
+  <div class="nav-inner">
+    <a href="#" class="nav-logo">Solvr<span class="dot">.</span></a>
+    <div class="nav-links">
+      <a href="#process">How It Works</a>
+      <a href="#pricing">Pricing</a>
+      <a href="#stats">Results</a>
+    </div>
+    <div class="nav-cta">
+      <a href="#cta" class="btn btn-md btn-fill">Get Your Free Demo</a>
+    </div>
+    <div class="hamburger" id="hamburger" aria-label="Menu" role="button" tabindex="0">
+      <span></span><span></span><span></span>
+    </div>
+  </div>
+</nav>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#process" class="mobile-nav-link">How It Works</a>
+  <a href="#pricing" class="mobile-nav-link">Pricing</a>
+  <a href="#stats" class="mobile-nav-link">Results</a>
+  <a href="#cta" class="btn btn-md btn-fill mobile-nav-link">Get Your Free Demo</a>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="container">
+    <div class="hero-grid">
+      <div class="hero-text">
+        <h1 class="rv">When did you last check your website <span class="accent">on your phone?</span></h1>
+        <p class="hero-sub rv d1">Over half your patients search for dentists on mobile. Most dental websites were built for desktop. Right now, more than half the people searching for your practice are landing on a broken page — and booking someone else. We fix that. Free. Before you spend a cent.</p>
+        <div class="hero-ctas rv d2">
+          <a href="#cta" class="btn btn-lg btn-fill">See Your Free Demo →</a>
+          <a href="#process" class="btn btn-lg btn-ghost">How it works ↓</a>
+        </div>
+        <div class="trust-strip rv d3">
+          <div class="trust-item"><span class="trust-dot"></span>Built in 48 hours</div>
+          <div class="trust-item"><span class="trust-dot"></span>No obligation</div>
+          <div class="trust-item"><span class="trust-dot"></span>Live in 5 days</div>
+        </div>
+      </div>
+      <div class="hero-image rv d2">
+        <img src="https://images.unsplash.com/photo-1588776814546-1ffcf47267a5?w=1200&q=80" alt="Modern dental practice" loading="eager">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STATS BAR -->
+<section class="stats-bar" id="stats">
+  <div class="container">
+    <div class="stats-grid">
+      <div class="stat-item rv">
+        <div class="stat-num" data-target="55" data-suffix="%">55%</div>
+        <div class="stat-label">of patients search on mobile</div>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="stat-item rv d1">
+        <div class="stat-num" data-target="53" data-suffix="%">53%</div>
+        <div class="stat-label">abandon a slow site in 3 seconds</div>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="stat-item rv d2">
+        <div class="stat-num" data-target="8" data-suffix="/10" data-fraction>8/10</div>
+        <div class="stat-label">patients leave without booking</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROBLEM -->
+<section class="problem">
+  <div class="container">
+    <div class="problem-header rv">
+      <h2>Most dentists have never checked their own website on a phone.</h2>
+      <p class="sub">Most of their patients have. Most of them left.</p>
+    </div>
+    <div class="problem-grid">
+      <div class="problem-img rv">
+        <img src="https://images.unsplash.com/photo-1629909613654-28e377c37b09?w=800&q=80" alt="Dental practice interior" loading="lazy">
+      </div>
+      <div class="problem-cards">
+        <div class="problem-card rv">
+          <div class="problem-num">01</div>
+          <h3>More than half your patients are on mobile</h3>
+          <p>55% of patients search on their phone. If your site isn't built for that, you're invisible to more than half the people actively searching for you — right now, today.</p>
+        </div>
+        <div class="problem-card rv d1">
+          <div class="problem-num">02</div>
+          <h3>Slow pages send patients to your competitor</h3>
+          <p>53% of mobile visitors leave a site that takes longer than 3 seconds to load. The average dental site loads in 6–8 seconds. That patient didn't stop looking for a dentist. They just called someone else.</p>
+        </div>
+        <div class="problem-card rv d2">
+          <div class="problem-num">03</div>
+          <h3>No clear reason to book means no booking</h3>
+          <p>When a patient lands and nothing tells them what to do — no instant contact, no visible reviews, no easy next step — they leave. They were ready. You lost them to friction.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SOLUTION -->
+<section class="solution">
+  <div class="container">
+    <div class="solution-header rv">
+      <h2>We've already built you a better one. <span class="accent">Free.</span></h2>
+      <p class="sub">Before you pay anything. Before you commit to a single conversation. We build your practice a fully working patient page — mobile-perfect, fast, with your real reviews and your real services. You see it. Then you decide.</p>
+    </div>
+    <div class="glass-callout rv">
+      The free demo we build you — before you spend a cent — already serves the 55% of patients your current site is failing. That's not a promise. You see it yourself first.
+    </div>
+    <div class="outcome-grid">
+      <div class="outcome-row rv">
+        <span class="outcome-arrow">→</span>
+        <span class="outcome-text">Serves mobile patients perfectly — the 55% your current site is losing right now</span>
+      </div>
+      <div class="outcome-row rv d1">
+        <span class="outcome-arrow">→</span>
+        <span class="outcome-text">Loads in under 2 seconds — patients stay instead of bouncing to a competitor</span>
+      </div>
+      <div class="outcome-row rv d2">
+        <span class="outcome-arrow">→</span>
+        <span class="outcome-text">Your real Google reviews front and centre — instant trust before they scroll</span>
+      </div>
+      <div class="outcome-row rv d3">
+        <span class="outcome-arrow">→</span>
+        <span class="outcome-text">One clear action above the fold — patients know exactly what to do, immediately</span>
+      </div>
+      <div class="outcome-row rv d4">
+        <span class="outcome-arrow">→</span>
+        <span class="outcome-text">Ranked for local Google search — found before the practice down the street</span>
+      </div>
+    </div>
+    <div class="solution-cta rv">
+      <a href="#cta" class="btn btn-lg btn-fill">Request Your Free Demo →</a>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section class="process" id="process">
+  <div class="container">
+    <div class="process-header rv">
+      <h2>See the result before you decide.</h2>
+      <p class="sub">That's our promise.</p>
+    </div>
+    <div class="steps-row">
+      <div class="step rv">
+        <div class="step-num">1</div>
+        <h3>We audit where you're losing patients</h3>
+        <p>Free. We look at exactly how your practice shows up on mobile right now. 48 hours. You do nothing.</p>
+      </div>
+      <div class="step rv d1">
+        <div class="step-num">2</div>
+        <h3>We build your demo</h3>
+        <p>A fully working patient page using your real reviews, your real services, your city. Built in 48 hours.</p>
+      </div>
+      <div class="step rv d2">
+        <div class="step-num">3</div>
+        <h3>You see it on a 20-minute call</h3>
+        <p>We walk through it together. No pitch. No pressure. Just the work.</p>
+      </div>
+      <div class="step rv d3">
+        <div class="step-num">4</div>
+        <h3>You decide</h3>
+        <p>Love it — we go live in 5 days. Don't love it — walk away. No invoice. No follow-up. We mean it.</p>
+      </div>
+      <div class="step rv d4">
+        <div class="step-num">5</div>
+        <h3>Patients start coming in</h3>
+        <p>Monthly report shows every call, every enquiry, every review gained. ROI you can actually see.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section class="pricing" id="pricing">
+  <div class="container">
+    <div class="pricing-header rv">
+      <h2>One new patient pays for months of this.</h2>
+    </div>
+    <div class="value-frame rv">
+      A cosmetic dental patient visits 2–3 times a year and spends $500–$1,500 per visit. That's up to $4,000 a year from one person. Our Core system is $497/month. One new patient a month covers our fee and leaves you $3,500+ in net revenue every single month.
+    </div>
+    <div class="pricing-grid">
+      <!-- Starter -->
+      <div class="pricing-card rv">
+        <div class="pricing-tier">Starter</div>
+        <div class="pricing-tagline">Get started</div>
+        <div class="pricing-amount">$997</div>
+        <div class="pricing-period">setup + $297/mo</div>
+        <ul class="pricing-features">
+          <li>Mobile-optimised patient page</li>
+          <li>Live on your domain in 5 days</li>
+          <li>Built with your real reviews and services</li>
+          <li>SEO-ready for local Google search</li>
+          <li>Monthly performance report</li>
+        </ul>
+        <a href="#cta" class="btn btn-md btn-ghost">Get Started</a>
+      </div>
+      <!-- Core (Featured) -->
+      <div class="pricing-card featured rv d1">
+        <div class="badge-popular">Most Popular</div>
+        <div class="pricing-tier">Core</div>
+        <div class="pricing-tagline">The full system</div>
+        <div class="pricing-amount">$1,500</div>
+        <div class="pricing-period">setup + $497/mo</div>
+        <ul class="pricing-features">
+          <li>Everything in Starter</li>
+          <li>Auto-responder — every enquiry gets instant reply</li>
+          <li>AI chat — captures patients at 11pm</li>
+          <li>Booking widget — zero friction to book</li>
+          <li>Review automation — ranking climbs automatically</li>
+          <li>Monthly ROI dashboard</li>
+        </ul>
+        <a href="#cta" class="btn btn-md btn-fill">Get Started →</a>
+      </div>
+      <!-- Premium -->
+      <div class="pricing-card rv d2">
+        <div class="pricing-tier">Premium</div>
+        <div class="pricing-tagline">Maximum growth</div>
+        <div class="pricing-amount">$2,500</div>
+        <div class="pricing-period">setup + performance fee</div>
+        <ul class="pricing-features">
+          <li>Everything in Core</li>
+          <li>Google Ads management</li>
+          <li>Performance-based — earn on results above baseline</li>
+          <li>Call tracking and attribution</li>
+          <li>Competitor monitoring monthly</li>
+        </ul>
+        <a href="#cta" class="btn btn-md btn-ghost">Talk to Us</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOUNDER -->
+<section class="founder">
+  <div class="container">
+    <div class="founder-grid rv">
+      <div class="founder-photo">
+        <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?w=400&q=80" alt="Max Hurrell, Founder of Solvr" loading="lazy">
+      </div>
+      <div class="founder-text">
+        <blockquote>I built Solvr because great practices were losing patients to competitors with worse service — just because their website didn't work on a phone.</blockquote>
+        <p class="founder-body">The fix isn't complicated. But nobody was offering to prove it before asking for money. So that's what we do. We build the proof first. You decide after.</p>
+        <p class="founder-name">Max Hurrell — Founder, Solvr.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="faq" id="faq">
+  <div class="container">
+    <div class="faq-header rv">
+      <h2>Questions.</h2>
+    </div>
+    <div class="faq-list">
+      <div class="faq-item rv">
+        <button class="faq-question">
+          <span>I already have a website.</span>
+          <span class="faq-icon"></span>
+        </button>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">Most practices do. The question is whether it works on a phone — where 55% of your patients are searching. If it doesn't, you're invisible to more than half your potential patients before they read your name. The demo shows you exactly what they're seeing right now.</div>
+        </div>
+      </div>
+      <div class="faq-item rv d1">
+        <button class="faq-question">
+          <span>How do I know this will actually get me more patients?</span>
+          <span class="faq-icon"></span>
+        </button>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">You see the demo before paying anything. If it doesn't make you think 'we need this,' you walk away. No invoice. No follow-up. We only make money if you believe in what we built.</div>
+        </div>
+      </div>
+      <div class="faq-item rv d2">
+        <button class="faq-question">
+          <span>I'm already running Google Ads.</span>
+          <span class="faq-icon"></span>
+        </button>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">Even better. If your page isn't mobile-optimised, you're paying for patients who click, see a broken page on their phone, and leave in seconds. We fix the page — and can take over the ad account management on a performance basis as part of our Premium tier.</div>
+        </div>
+      </div>
+      <div class="faq-item rv d3">
+        <button class="faq-question">
+          <span>Where is your team based?</span>
+          <span class="faq-icon"></span>
+        </button>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">We're a remote team. Our clients are across the US. The work speaks for itself — and you see it before we ask for anything.</div>
+        </div>
+      </div>
+      <div class="faq-item rv d4">
+        <button class="faq-question">
+          <span>How long does it take?</span>
+          <span class="faq-icon"></span>
+        </button>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">Demo ready in 48 hours. Live on your domain in 5 business days if you choose to proceed.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FINAL CTA -->
+<section class="final-cta" id="cta">
+  <div class="container">
+    <h2 class="rv">Find out how many patients your site is <span class="accent">losing right now.</span></h2>
+    <p class="sub rv d1">We audit your practice and build your demo in 48 hours. Free. No obligation. No hard sell.</p>
+    <div class="rv d2">
+      <a href="mailto:hello@solvr.com" class="btn btn-lg btn-fill">Request Your Free Demo →</a>
+    </div>
+    <p class="final-small rv d3">Takes 2 minutes. We handle everything else.</p>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-inner">
+      <div class="footer-left">
+        <span class="footer-logo">Solvr<span class="dot">.</span></span>
+        <span class="footer-tagline">Patient acquisition for cosmetic dental practices.</span>
+      </div>
+      <div class="footer-links">
+        <a href="#process">How It Works</a>
+        <a href="#pricing">Pricing</a>
+        <a href="#faq">FAQ</a>
+      </div>
+      <div class="footer-copy">&copy; 2026 Solvr. All rights reserved.</div>
+    </div>
+  </div>
+</footer>
+
+<script>
+// Sticky nav
+const nav = document.getElementById('nav');
+window.addEventListener('scroll', () => {
+  nav.classList.toggle('scrolled', window.scrollY > 40);
+}, { passive: true });
+
+// Mobile menu
+const hamburger = document.getElementById('hamburger');
+const mobileMenu = document.getElementById('mobileMenu');
+hamburger.addEventListener('click', () => {
+  hamburger.classList.toggle('open');
+  mobileMenu.classList.toggle('open');
+  document.body.style.overflow = mobileMenu.classList.contains('open') ? 'hidden' : '';
+});
+document.querySelectorAll('.mobile-nav-link').forEach(link => {
+  link.addEventListener('click', () => {
+    hamburger.classList.remove('open');
+    mobileMenu.classList.remove('open');
+    document.body.style.overflow = '';
+  });
+});
+
+// Reveal on scroll
+const revealEls = document.querySelectorAll('.rv');
+const revealObs = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.classList.add('vis');
+      revealObs.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.1 });
+revealEls.forEach(el => revealObs.observe(el));
+
+// Stats count-up
+const statNums = document.querySelectorAll('.stat-num');
+let statsCounted = false;
+function countUp(el) {
+  const target = parseInt(el.dataset.target);
+  const suffix = el.dataset.suffix || '';
+  const duration = 2000;
+  const start = performance.now();
+  el.textContent = '0' + suffix;
+  function step(now) {
+    const elapsed = now - start;
+    const progress = Math.min(elapsed / duration, 1);
+    const eased = 1 - Math.pow(1 - progress, 3);
+    const current = Math.round(eased * target);
+    el.textContent = current + suffix;
+    if (progress < 1) requestAnimationFrame(step);
+  }
+  requestAnimationFrame(step);
+}
+const statsObs = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting && !statsCounted) {
+      statsCounted = true;
+      statNums.forEach(el => countUp(el));
+      statsObs.disconnect();
+    }
+  });
+}, { threshold: 0.3 });
+statNums.forEach(el => statsObs.observe(el));
+// 4s fallback
+setTimeout(() => {
+  if (!statsCounted) {
+    statsCounted = true;
+    statNums.forEach(el => countUp(el));
+  }
+}, 4000);
+
+// FAQ accordion
+document.querySelectorAll('.faq-question').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const item = btn.parentElement;
+    const answer = item.querySelector('.faq-answer');
+    const isOpen = item.classList.contains('open');
+    // Close all
+    document.querySelectorAll('.faq-item.open').forEach(openItem => {
+      openItem.classList.remove('open');
+      openItem.querySelector('.faq-answer').style.maxHeight = '0';
+    });
+    // Toggle current
+    if (!isOpen) {
+      item.classList.add('open');
+      answer.style.maxHeight = answer.scrollHeight + 'px';
+    }
+  });
+});
+</script>
+</body>
+</html>
