@@ -1236,7 +1236,7 @@ gsap.utils.toArray('.problem-row').forEach((row, i) => {
     ease: 'power2.out',
     scrollTrigger: {
       trigger: row,
-      start: 'top 88%',
+      start: 'top 90%',
       once: true
     }
   });
@@ -1250,7 +1250,7 @@ gsap.from('.process-steps', {
   ease: 'power2.out',
   scrollTrigger: {
     trigger: '.process-outer',
-    start: 'top 75%',
+    start: 'top 90%',
     once: true
   }
 });
@@ -1261,7 +1261,7 @@ gsap.from('.process-demo', {
   ease: 'power2.out',
   scrollTrigger: {
     trigger: '.process-outer',
-    start: 'top 75%',
+    start: 'top 90%',
     once: true
   }
 });
@@ -1290,7 +1290,7 @@ gsap.from('.risk-left', {
   ease: 'power2.out',
   scrollTrigger: {
     trigger: '.risk-layout',
-    start: 'top 75%',
+    start: 'top 90%',
     once: true
   }
 });
@@ -1301,7 +1301,7 @@ gsap.from('.risk-right', {
   ease: 'power2.out',
   scrollTrigger: {
     trigger: '.risk-layout',
-    start: 'top 75%',
+    start: 'top 90%',
     once: true
   }
 });
@@ -1310,7 +1310,6 @@ gsap.from('.risk-right', {
 const ctaH2 = document.querySelector('.final-cta h2');
 if (ctaH2) {
   const html = ctaH2.innerHTML;
-  // Wrap each word (preserve <br> and <em> tags)
   const wrapped = html.replace(/(<[^>]+>)|(\S+)/g, (match, tag, word) => {
     if (tag) return tag;
     return '<span class="cta-word" style="display:inline-block;opacity:0;">' + word + '&nbsp;</span>';
@@ -1325,7 +1324,7 @@ if (ctaH2) {
       ease: 'power2.out',
       scrollTrigger: {
         trigger: '.final-cta',
-        start: 'top 80%',
+        start: 'top 90%',
         once: true
       }
     });
