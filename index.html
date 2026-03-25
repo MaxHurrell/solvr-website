@@ -105,7 +105,7 @@ nav {
 /* ── HERO ── */
 .hero {
   display: grid;
-  grid-template-columns: 1fr 460px;
+  grid-template-columns: 1fr 420px;
   min-height: calc(100vh - 62px);
   border-bottom: 2px solid var(--ink);
 }
@@ -116,6 +116,7 @@ nav {
   flex-direction: column;
   justify-content: space-between;
   gap: 40px;
+  max-width: 640px;
 }
 .hero-dateline {
   font-size: 11px;
@@ -151,6 +152,7 @@ nav {
   gap: 16px;
   padding: 14px 0;
   border-bottom: 1px solid var(--rule);
+  max-width: 580px;
 }
 .hero-proof-line:first-child { border-top: 1px solid var(--rule); }
 .proof-stat {
@@ -211,6 +213,7 @@ nav {
   padding: 24px 20px;
   gap: 14px;
   animation: up 0.55s ease 0.25s both;
+  max-width: 420px;
 }
 .comparison-label {
   font-size: 10px;
@@ -218,15 +221,16 @@ nav {
   letter-spacing: 0.12em;
   text-transform: uppercase;
   color: var(--ink3);
-  align-self: flex-start;
+  align-self: center;
+  text-align: center;
+  width: 100%;
 }
 .phones-row {
   display: flex;
   align-items: flex-end;
-  gap: 12px;
-  position: relative;
-  width: 100%;
+  gap: 16px;
   justify-content: center;
+  width: 100%;
 }
 .phone {
   width: 155px;
