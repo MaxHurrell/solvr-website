@@ -920,45 +920,105 @@ footer p { font-size: 12px; color: rgba(255,255,255,0.2); }
   <div class="hero-right">
     <p class="comparison-label">Before &amp; After</p>
     <div class="phones-row">
-      <div>
-        <div class="phone phone-bad">
-          <div class="phone-notch"></div>
-          <div class="bad-screen">
-            <div class="bs-header">DENTAL CARE CENTER</div>
-            <div class="bs-nav"><span>Home</span><span>About</span><span>Services</span><span>Contact</span><span>Blog</span><span>FAQ</span></div>
-            <div class="bs-img">Welcome to Our Practice<br>[BANNER IMAGE]</div>
-            <div class="bs-txt">We are a full-service family dental practice dedicated to comprehensive care in a comfortable and relaxing environment for all ages...</div>
-            <div class="bs-overflow">Mon–Fri 8am–5pm · Tel: (555) 123-4567 · After hours: Voicemail only</div>
-            <div class="bs-hours">Weekend: Closed</div>
-            <div class="bs-btn">LEARN MORE ABOUT US</div>
-          </div>
-        </div>
-        <p class="phone-caption bad">Right now</p>
+
+      <!-- BEFORE PHONE -->
+      <div class="phone-wrap">
+        <svg width="200" height="420" viewBox="0 0 200 420" style="transform:rotate(-4deg) translateY(16px); filter:saturate(0.4) brightness(0.85);" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="frameGradBefore" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" stop-color="#C8C8C8"/>
+              <stop offset="100%" stop-color="#909090"/>
+            </linearGradient>
+            <clipPath id="screenClipBefore">
+              <rect x="10" y="14" width="180" height="392" rx="36"/>
+            </clipPath>
+          </defs>
+          <rect x="0" y="0" width="200" height="420" rx="44" fill="url(#frameGradBefore)"/>
+          <rect x="3" y="3" width="194" height="414" rx="42" fill="#1a1a1a"/>
+          <rect x="7" y="7" width="186" height="406" rx="39" fill="#f0f0f0"/>
+          <rect x="72" y="13" width="56" height="14" rx="7" fill="#1a1a1a"/>
+          <g clip-path="url(#screenClipBefore)">
+            <rect x="10" y="14" width="180" height="392" fill="#f5f5f0"/>
+            <rect x="10" y="14" width="180" height="28" fill="#1a3a5c"/>
+            <text x="100" y="31" text-anchor="middle" fill="white" font-family="Arial" font-size="7" font-weight="bold">SUNRISE DENTAL CENTRE</text>
+            <rect x="10" y="42" width="180" height="14" fill="#122840"/>
+            <text x="18" y="52" fill="rgba(255,255,255,0.6)" font-family="Arial" font-size="4.5">Home | About | Services | Treatments | Contact | Blog | FAQ</text>
+            <rect x="10" y="56" width="180" height="60" fill="#cccccc"/>
+            <text x="100" y="82" text-anchor="middle" fill="#888" font-family="Arial" font-size="7">WELCOME TO OUR PRACTICE</text>
+            <text x="100" y="94" text-anchor="middle" fill="#999" font-family="Arial" font-size="5.5">[banner image]</text>
+            <text x="18" y="128" fill="#555" font-family="Arial" font-size="5">We are a comprehensive dental practice serving all your family dental</text>
+            <text x="18" y="138" fill="#555" font-family="Arial" font-size="5">needs. Our experienced team provides quality care in a comfortable</text>
+            <text x="18" y="148" fill="#555" font-family="Arial" font-size="5">and welcoming environment. We accept most insurance plans.</text>
+            <rect x="10" y="158" width="180" height="1" fill="#ddd"/>
+            <text x="18" y="170" fill="#aaa" font-family="Arial" font-size="4.5">Mon–Fri 8am–5pm only · Call: (305) 555-0182 · After hours: voicemail</text>
+            <rect x="60" y="178" width="80" height="16" fill="#1a3a5c"/>
+            <text x="100" y="190" text-anchor="middle" fill="white" font-family="Arial" font-size="6">LEARN MORE ABOUT US</text>
+            <text x="100" y="230" text-anchor="middle" fill="#ccc" font-family="Arial" font-size="5">No online booking available</text>
+            <text x="100" y="243" text-anchor="middle" fill="#ccc" font-family="Arial" font-size="5">Call during business hours only</text>
+          </g>
+        </svg>
+        <p class="phone-caption bad">Before</p>
       </div>
-      <div class="vs-mark">VS</div>
-      <div style="position:relative;">
-        <div class="phone phone-good">
-          <div class="phone-notch"></div>
-          <div class="good-screen">
-            <div class="gs-header"><span>Bright Smile Dental</span><a>Book Now</a></div>
-            <div class="gs-body">
-              <div class="gs-h1">Cape Town's #1<br>Cosmetic Dentist</div>
-              <div class="gs-sub">400+ happy patients. Free consult available today.</div>
-              <div class="gs-cta">📅 Book a Free Consultation</div>
-              <div class="gs-stars">★★★★★</div>
-              <div class="gs-review">"Best experience I've ever had!" — Sarah M.</div>
-            </div>
-            <div class="gs-grid">
-              <div class="gs-card"><strong>Veneers</strong><span>From $900</span></div>
-              <div class="gs-card"><strong>Whitening</strong><span>From $299</span></div>
-              <div class="gs-card"><strong>Implants</strong><span>From $2,400</span></div>
-              <div class="gs-card"><strong>Invisalign</strong><span>From $3,500</span></div>
-            </div>
-            <div class="gs-chat">💬</div>
-          </div>
-        </div>
+
+      <div class="vs-mark">vs</div>
+
+      <!-- AFTER PHONE -->
+      <div class="phone-wrap">
+        <svg width="200" height="420" viewBox="0 0 200 420" style="transform:rotate(2deg) translateY(-12px);" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="frameGradAfter" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" stop-color="#E0E0E0"/>
+              <stop offset="100%" stop-color="#B0B0B0"/>
+            </linearGradient>
+            <clipPath id="screenClipAfter">
+              <rect x="10" y="14" width="180" height="392" rx="36"/>
+            </clipPath>
+            <filter id="glow">
+              <feGaussianBlur stdDeviation="6" result="blur"/>
+              <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+            </filter>
+          </defs>
+          <rect x="10" y="14" width="180" height="392" rx="36" fill="rgba(26,143,255,0.15)" filter="url(#glow)"/>
+          <rect x="0" y="0" width="200" height="420" rx="44" fill="url(#frameGradAfter)"/>
+          <rect x="3" y="3" width="194" height="414" rx="42" fill="#1a1a1a"/>
+          <rect x="7" y="7" width="186" height="406" rx="39" fill="#0B1220"/>
+          <rect x="72" y="13" width="56" height="14" rx="7" fill="#1a1a1a"/>
+          <g clip-path="url(#screenClipAfter)">
+            <rect x="10" y="14" width="180" height="392" fill="#0B1220"/>
+            <rect x="10" y="14" width="180" height="30" fill="#1A8FFF"/>
+            <text x="22" y="32" fill="white" font-family="Arial" font-size="8" font-weight="bold">Bright Smile Dental</text>
+            <rect x="148" y="19" width="34" height="14" rx="7" fill="rgba(255,255,255,0.2)"/>
+            <text x="165" y="29" text-anchor="middle" fill="white" font-family="Arial" font-size="6" font-weight="bold">Book →</text>
+            <text x="22" y="62" fill="white" font-family="Arial" font-size="12" font-weight="bold">Cape Town's</text>
+            <text x="22" y="78" fill="white" font-family="Arial" font-size="12" font-weight="bold">#1 Cosmetic</text>
+            <text x="22" y="94" fill="white" font-family="Arial" font-size="12" font-weight="bold">Dentist</text>
+            <text x="22" y="108" fill="rgba(255,255,255,0.55)" font-family="Arial" font-size="6">500+ happy patients · Same-week appts</text>
+            <rect x="18" y="116" width="164" height="22" rx="5" fill="#1A8FFF"/>
+            <text x="100" y="130" text-anchor="middle" fill="white" font-family="Arial" font-size="7.5" font-weight="bold">📅 Book a Free Consultation</text>
+            <text x="22" y="152" fill="#FFB800" font-family="Arial" font-size="9">★★★★★</text>
+            <text x="82" y="152" fill="rgba(255,255,255,0.6)" font-family="Arial" font-size="6">4.9 · 127 reviews</text>
+            <text x="22" y="164" fill="rgba(255,255,255,0.4)" font-family="Arial" font-size="5.5" font-style="italic">"Couldn't believe how painless it was." — James T.</text>
+            <rect x="18" y="174" width="78" height="28" rx="4" fill="rgba(26,143,255,0.15)" stroke="rgba(26,143,255,0.3)" stroke-width="1"/>
+            <text x="57" y="186" text-anchor="middle" fill="white" font-family="Arial" font-size="6.5" font-weight="bold">Veneers</text>
+            <text x="57" y="197" text-anchor="middle" fill="rgba(255,255,255,0.5)" font-family="Arial" font-size="5.5">From $900</text>
+            <rect x="104" y="174" width="78" height="28" rx="4" fill="rgba(26,143,255,0.15)" stroke="rgba(26,143,255,0.3)" stroke-width="1"/>
+            <text x="143" y="186" text-anchor="middle" fill="white" font-family="Arial" font-size="6.5" font-weight="bold">Whitening</text>
+            <text x="143" y="197" text-anchor="middle" fill="rgba(255,255,255,0.5)" font-family="Arial" font-size="5.5">From $299</text>
+            <rect x="18" y="208" width="78" height="28" rx="4" fill="rgba(26,143,255,0.15)" stroke="rgba(26,143,255,0.3)" stroke-width="1"/>
+            <text x="57" y="220" text-anchor="middle" fill="white" font-family="Arial" font-size="6.5" font-weight="bold">Implants</text>
+            <text x="57" y="231" text-anchor="middle" fill="rgba(255,255,255,0.5)" font-family="Arial" font-size="5.5">From $2,400</text>
+            <rect x="104" y="208" width="78" height="28" rx="4" fill="rgba(26,143,255,0.15)" stroke="rgba(26,143,255,0.3)" stroke-width="1"/>
+            <text x="143" y="220" text-anchor="middle" fill="white" font-family="Arial" font-size="6.5" font-weight="bold">Invisalign</text>
+            <text x="143" y="231" text-anchor="middle" fill="rgba(255,255,255,0.5)" font-family="Arial" font-size="5.5">From $3,500</text>
+            <circle cx="168" cy="368" r="18" fill="#25D366"/>
+            <text x="168" y="374" text-anchor="middle" fill="white" font-family="Arial" font-size="14" font-weight="bold">W</text>
+            <rect x="10" y="390" width="180" height="16" fill="rgba(26,143,255,0.2)"/>
+            <text x="100" y="401" text-anchor="middle" fill="#1A8FFF" font-family="Arial" font-size="6" font-weight="bold">TAP TO BOOK · INSTANT CONFIRMATION</text>
+          </g>
+        </svg>
         <p class="phone-caption good">After Solvr</p>
       </div>
+
     </div>
   </div>
 </div>
