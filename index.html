@@ -207,7 +207,7 @@ nav {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 48px 32px;
+  padding: 24px 20px;
   gap: 14px;
   animation: up 0.55s ease 0.25s both;
 }
@@ -222,8 +222,10 @@ nav {
 .phones-row {
   display: flex;
   align-items: flex-end;
-  gap: 18px;
+  gap: 12px;
   position: relative;
+  width: 100%;
+  justify-content: center;
 }
 .phone {
   width: 155px;
@@ -923,7 +925,7 @@ footer p { font-size: 12px; color: rgba(255,255,255,0.2); }
 
       <!-- BEFORE PHONE -->
       <div class="phone-wrap">
-        <svg width="200" height="420" viewBox="0 0 200 420" style="transform:rotate(-4deg) translateY(16px); filter:saturate(0.4) brightness(0.85);" xmlns="http://www.w3.org/2000/svg">
+        <svg width="210" height="440" viewBox="0 0 200 420" style="transform:rotate(-4deg) translateY(16px); filter:saturate(0.4) brightness(0.85);" xmlns="http://www.w3.org/2000/svg">
           <defs>
             <linearGradient id="frameGradBefore" x1="0" y1="0" x2="1" y2="1">
               <stop offset="0%" stop-color="#C8C8C8"/>
@@ -964,7 +966,7 @@ footer p { font-size: 12px; color: rgba(255,255,255,0.2); }
 
       <!-- AFTER PHONE -->
       <div class="phone-wrap">
-        <svg width="200" height="420" viewBox="0 0 200 420" style="transform:rotate(2deg) translateY(-12px);" xmlns="http://www.w3.org/2000/svg">
+        <svg width="210" height="440" viewBox="0 0 200 420" style="transform:rotate(2deg) translateY(-12px);" xmlns="http://www.w3.org/2000/svg">
           <defs>
             <linearGradient id="frameGradAfter" x1="0" y1="0" x2="1" y2="1">
               <stop offset="0%" stop-color="#E0E0E0"/>
@@ -1343,6 +1345,9 @@ footer p { font-size: 12px; color: rgba(255,255,255,0.2); }
 <section class="section" style="background: var(--paper2);">
   <div class="founder-grid" style="display:grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center;">
     <div>
+      <div style="width:80px; height:80px; border-radius:50%; background:var(--paper3); border:2px solid var(--rule2); margin-bottom:24px; display:flex; align-items:center; justify-content:center; overflow:hidden;">
+        <span style="font-size:11px; color:var(--ink3); letter-spacing:0.05em; text-transform:uppercase; text-align:center; line-height:1.4;">Photo<br>here</span>
+      </div>
       <div class="eyebrow">Who's behind this</div>
       <h2 class="sec-h2" style="text-transform:uppercase; margin-bottom: 24px;">Built by someone who's done this before.</h2>
       <p style="font-size:17px; color:var(--ink2); line-height:1.7; font-style:italic; margin-bottom:20px;">"I built Solvr because I kept seeing the same thing: good practices with strong reputations, losing patients to competitors — because more than half their visitors were landing on a website that didn't work on mobile. The fix was obvious. Nobody was doing it proactively."</p>
