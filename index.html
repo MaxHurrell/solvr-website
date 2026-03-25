@@ -826,44 +826,44 @@ footer p { font-size: 12px; color: rgba(255,255,255,0.2); }
 
 /* RESPONSIVE */
 @media (max-width: 980px) {
-  .hero { grid-template-columns: 1fr; min-height: auto; }
-  .hero-left { padding: 40px 6vw 48px; }
-  .hero-right { display: none; }
-  nav { grid-template-columns: 1fr auto; }
-  .nav-left { display: none; }
-  .process-outer { grid-template-columns: 1fr; border: 2px solid var(--ink); }
-  .process-demo { order: -1; min-height: 300px; }
-  .math-layout { grid-template-columns: 1fr; }
-  .math-col + .math-col { border-left: none; border-top: 2px solid var(--ink); }
-  .risk-layout { grid-template-columns: 1fr; }
-  .risk-left { border-right: none; border-bottom: 2px solid var(--ink); }
-  .final-cta { grid-template-columns: 1fr; gap: 32px; padding: 60px 6vw; }
+  html, body { overflow-x: hidden !important; max-width: 100vw !important; }
+  .hero { grid-template-columns: 1fr !important; min-height: auto !important; }
+  .hero-left { padding: 40px 6vw 48px !important; border-right: none !important; }
+  .hero-right { display: none !important; }
+  nav { grid-template-columns: 1fr auto !important; }
+  .nav-left { display: none !important; }
+  .process-outer { grid-template-columns: 1fr !important; }
+  .process-demo { order: -1; min-height: 280px; }
+  .math-layout { grid-template-columns: 1fr !important; }
+  .math-col + .math-col { border-left: none !important; border-top: 2px solid var(--ink); }
+  .risk-layout { grid-template-columns: 1fr !important; }
+  .risk-left { border-right: none !important; border-bottom: 2px solid var(--ink); }
+  .final-cta { grid-template-columns: 1fr !important; gap: 32px; padding: 60px 6vw; }
   .final-cta-right { align-items: flex-start; }
-  .pricing-table { display: none; }
-  .pricing-mobile { display: block; }
-  .problems-layout { grid-template-columns: 1fr; }
-  .problems-aside { display: none; }
-  .problem-row { grid-template-columns: 40px 1fr; gap: 12px; }
-  .prob-cost { display: none; }
-  .section-h2 { font-size: 26px; }
-  .sec-h2 { font-size: 26px; }
-  .process-cols { grid-template-columns: 1fr 1fr; }
-  .niche-stats { grid-template-columns: 1fr 1fr; }
-  table { width: 100%; }
+  .pricing-table { display: none !important; }
+  .pricing-mobile { display: block !important; }
+  .problems-layout { grid-template-columns: 1fr !important; }
+  .problems-aside { display: none !important; }
+  .problem-row { grid-template-columns: 40px 1fr !important; }
+  .prob-cost { display: none !important; }
+  .section-h2, .sec-h2 { font-size: 26px !important; }
+  section { padding: 60px 5vw !important; }
+  .process-cols { grid-template-columns: 1fr 1fr !important; }
 }
 
 @media (max-width: 480px) {
-  .hero-left h1 { font-size: 38px; }
-  .proof-stat { font-size: 22px; min-width: 56px; }
-  .hero-deck { font-size: 16px; }
-  .btn-primary { font-size: 14px; padding: 13px 20px; width: 100%; text-align: center; }
-  .process-cols { grid-template-columns: 1fr; }
-  .section { padding: 56px 5vw; }
-  .math-col { padding: 28px 20px; }
-  .risk-left { padding: 28px 20px; }
-  .risk-point { padding: 16px 20px; }
-  .final-cta h2 { font-size: 28px; }
-  .big-cta { width: 100%; justify-content: center; font-size: 14px; }
+  .hero-left h1 { font-size: 36px !important; line-height: 1 !important; }
+  .proof-stat { font-size: 22px !important; min-width: 52px !important; }
+  .hero-deck { font-size: 16px !important; }
+  .btn-primary { font-size: 14px !important; padding: 13px 20px !important; width: 100% !important; text-align: center !important; display: block !important; }
+  .process-cols { grid-template-columns: 1fr !important; }
+  section { padding: 48px 5vw !important; }
+  .math-col { padding: 28px 20px !important; }
+  .risk-left { padding: 28px 20px !important; }
+  .risk-point { padding: 14px 18px !important; }
+  .final-cta h2 { font-size: 28px !important; }
+  .big-cta { width: 100% !important; justify-content: center !important; font-size: 14px !important; padding: 16px !important; }
+  .pm-card { padding: 24px 18px !important; }
 }
 </style>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
