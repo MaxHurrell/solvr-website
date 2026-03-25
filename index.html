@@ -26,7 +26,7 @@
   --body: 'Instrument Sans', sans-serif;
 }
 
-html { scroll-behavior: smooth; }
+html { scroll-behavior: smooth; overflow-x: hidden; }
 
 body {
   background: var(--paper);
@@ -827,19 +827,43 @@ footer p { font-size: 12px; color: rgba(255,255,255,0.2); }
 /* RESPONSIVE */
 @media (max-width: 980px) {
   .hero { grid-template-columns: 1fr; min-height: auto; }
+  .hero-left { padding: 40px 6vw 48px; }
   .hero-right { display: none; }
   nav { grid-template-columns: 1fr auto; }
   .nav-left { display: none; }
-  .process-outer { grid-template-columns: 1fr; }
-  .process-demo { order: -1; }
+  .process-outer { grid-template-columns: 1fr; border: 2px solid var(--ink); }
+  .process-demo { order: -1; min-height: 300px; }
   .math-layout { grid-template-columns: 1fr; }
   .math-col + .math-col { border-left: none; border-top: 2px solid var(--ink); }
   .risk-layout { grid-template-columns: 1fr; }
   .risk-left { border-right: none; border-bottom: 2px solid var(--ink); }
-  .final-cta { grid-template-columns: 1fr; }
+  .final-cta { grid-template-columns: 1fr; gap: 32px; padding: 60px 6vw; }
   .final-cta-right { align-items: flex-start; }
   .pricing-table { display: none; }
   .pricing-mobile { display: block; }
+  .problems-layout { grid-template-columns: 1fr; }
+  .problems-aside { display: none; }
+  .problem-row { grid-template-columns: 40px 1fr; gap: 12px; }
+  .prob-cost { display: none; }
+  .section-h2 { font-size: 26px; }
+  .sec-h2 { font-size: 26px; }
+  .process-cols { grid-template-columns: 1fr 1fr; }
+  .niche-stats { grid-template-columns: 1fr 1fr; }
+  table { width: 100%; }
+}
+
+@media (max-width: 480px) {
+  .hero-left h1 { font-size: 38px; }
+  .proof-stat { font-size: 22px; min-width: 56px; }
+  .hero-deck { font-size: 16px; }
+  .btn-primary { font-size: 14px; padding: 13px 20px; width: 100%; text-align: center; }
+  .process-cols { grid-template-columns: 1fr; }
+  .section { padding: 56px 5vw; }
+  .math-col { padding: 28px 20px; }
+  .risk-left { padding: 28px 20px; }
+  .risk-point { padding: 16px 20px; }
+  .final-cta h2 { font-size: 28px; }
+  .big-cta { width: 100%; justify-content: center; font-size: 14px; }
 }
 </style>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
