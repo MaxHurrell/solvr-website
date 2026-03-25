@@ -9,6 +9,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preload" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,800&family=Instrument+Sans:ital,wght@0,400;0,500;1,400&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
 <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,800&family=Instrument+Sans:ital,wght@0,400;0,500;1,400&display=swap"></noscript>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/device-frames@1.0.4/dist/device-frames.min.css">
 <style>
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -291,6 +292,9 @@ nav {
 }
 .phone-caption.bad { color: var(--red); }
 .phone-caption.good { color: var(--green); }
+.phone-wrap { display: flex; flex-direction: column; align-items: center; }
+.device-frame.device-iphone-15 { width: 200px !important; }
+.device-frame.device-iphone-15 .device-screen { height: 380px !important; overflow-y: hidden !important; }
 
 /* ── MOBILE PRICING CARDS ── */
 .pricing-mobile { display: none; }
@@ -923,101 +927,65 @@ footer p { font-size: 12px; color: rgba(255,255,255,0.2); }
     <p class="comparison-label">Before &amp; After</p>
     <div class="phones-row">
 
-      <!-- BEFORE PHONE -->
+      <!-- BEFORE phone -->
       <div class="phone-wrap">
-        <svg width="210" height="440" viewBox="0 0 200 420" style="transform:rotate(-4deg) translateY(16px); filter:saturate(0.4) brightness(0.85);" xmlns="http://www.w3.org/2000/svg">
-          <defs>
-            <linearGradient id="frameGradBefore" x1="0" y1="0" x2="1" y2="1">
-              <stop offset="0%" stop-color="#C8C8C8"/>
-              <stop offset="100%" stop-color="#909090"/>
-            </linearGradient>
-            <clipPath id="screenClipBefore">
-              <rect x="10" y="14" width="180" height="392" rx="36"/>
-            </clipPath>
-          </defs>
-          <rect x="0" y="0" width="200" height="420" rx="44" fill="url(#frameGradBefore)"/>
-          <rect x="3" y="3" width="194" height="414" rx="42" fill="#1a1a1a"/>
-          <rect x="7" y="7" width="186" height="406" rx="39" fill="#f0f0f0"/>
-          <rect x="72" y="13" width="56" height="14" rx="7" fill="#1a1a1a"/>
-          <g clip-path="url(#screenClipBefore)">
-            <rect x="10" y="14" width="180" height="392" fill="#f5f5f0"/>
-            <rect x="10" y="14" width="180" height="28" fill="#1a3a5c"/>
-            <text x="100" y="31" text-anchor="middle" fill="white" font-family="Arial" font-size="7" font-weight="bold">SUNRISE DENTAL CENTRE</text>
-            <rect x="10" y="42" width="180" height="14" fill="#122840"/>
-            <text x="18" y="52" fill="rgba(255,255,255,0.6)" font-family="Arial" font-size="4.5">Home | About | Services | Treatments | Contact | Blog | FAQ</text>
-            <rect x="10" y="56" width="180" height="60" fill="#cccccc"/>
-            <text x="100" y="82" text-anchor="middle" fill="#888" font-family="Arial" font-size="7">WELCOME TO OUR PRACTICE</text>
-            <text x="100" y="94" text-anchor="middle" fill="#999" font-family="Arial" font-size="5.5">[banner image]</text>
-            <text x="18" y="128" fill="#555" font-family="Arial" font-size="5">We are a comprehensive dental practice serving all your family dental</text>
-            <text x="18" y="138" fill="#555" font-family="Arial" font-size="5">needs. Our experienced team provides quality care in a comfortable</text>
-            <text x="18" y="148" fill="#555" font-family="Arial" font-size="5">and welcoming environment. We accept most insurance plans.</text>
-            <rect x="10" y="158" width="180" height="1" fill="#ddd"/>
-            <text x="18" y="170" fill="#aaa" font-family="Arial" font-size="4.5">Mon–Fri 8am–5pm only · Call: (305) 555-0182 · After hours: voicemail</text>
-            <rect x="60" y="178" width="80" height="16" fill="#1a3a5c"/>
-            <text x="100" y="190" text-anchor="middle" fill="white" font-family="Arial" font-size="6">LEARN MORE ABOUT US</text>
-            <text x="100" y="230" text-anchor="middle" fill="#ccc" font-family="Arial" font-size="5">No online booking available</text>
-            <text x="100" y="243" text-anchor="middle" fill="#ccc" font-family="Arial" font-size="5">Call during business hours only</text>
-          </g>
-        </svg>
+        <div class="device-frame device-iphone-15" style="transform: rotate(-4deg) translateY(16px); opacity: 0.82; filter: saturate(0.35);">
+          <div class="device-screen" style="background:#f5f5f0; overflow:hidden; font-family:Arial,sans-serif;">
+            <div style="background:#1a3a5c; padding:5px 8px; font-size:7px; font-weight:700; color:white;">SUNRISE DENTAL CENTRE</div>
+            <div style="background:#122840; padding:3px 8px; display:flex; gap:4px; overflow:hidden;">
+              <span style="font-size:4.5px; color:rgba(255,255,255,0.55); white-space:nowrap;">Home | About | Services | Treatments | Contact | Blog | FAQ | Patient Info</span>
+            </div>
+            <div style="background:#ccc; height:55px; display:flex; align-items:center; justify-content:center; flex-direction:column; gap:2px;">
+              <span style="font-size:7px; color:#888;">WELCOME TO OUR PRACTICE</span>
+              <span style="font-size:5px; color:#aaa;">[banner image]</span>
+            </div>
+            <div style="padding:6px 8px; font-size:5px; color:#555; line-height:1.6;">We are a comprehensive family dental practice dedicated to providing quality care in a comfortable and welcoming environment. We accept most insurance plans and welcome new patients.</div>
+            <div style="padding:2px 8px; font-size:4.5px; color:#aaa; white-space:nowrap; overflow:hidden;">Mon–Fri 8am–5pm only &nbsp;·&nbsp; Call: (305) 555-0182 &nbsp;·&nbsp; After hours: voicemail only</div>
+            <div style="margin:6px 8px; background:#1a3a5c; color:white; font-size:5.5px; padding:4px 8px; display:inline-block;">LEARN MORE ABOUT US</div>
+            <div style="padding:8px; margin-top:8px; text-align:center; font-size:5px; color:#bbb;">No online booking available.<br>Please call during business hours.</div>
+          </div>
+        </div>
         <p class="phone-caption bad">Before</p>
       </div>
 
       <div class="vs-mark">vs</div>
 
-      <!-- AFTER PHONE -->
+      <!-- AFTER phone -->
       <div class="phone-wrap">
-        <svg width="210" height="440" viewBox="0 0 200 420" style="transform:rotate(2deg) translateY(-12px);" xmlns="http://www.w3.org/2000/svg">
-          <defs>
-            <linearGradient id="frameGradAfter" x1="0" y1="0" x2="1" y2="1">
-              <stop offset="0%" stop-color="#E0E0E0"/>
-              <stop offset="100%" stop-color="#B0B0B0"/>
-            </linearGradient>
-            <clipPath id="screenClipAfter">
-              <rect x="10" y="14" width="180" height="392" rx="36"/>
-            </clipPath>
-            <filter id="glow">
-              <feGaussianBlur stdDeviation="6" result="blur"/>
-              <feComposite in="SourceGraphic" in2="blur" operator="over"/>
-            </filter>
-          </defs>
-          <rect x="10" y="14" width="180" height="392" rx="36" fill="rgba(26,143,255,0.15)" filter="url(#glow)"/>
-          <rect x="0" y="0" width="200" height="420" rx="44" fill="url(#frameGradAfter)"/>
-          <rect x="3" y="3" width="194" height="414" rx="42" fill="#1a1a1a"/>
-          <rect x="7" y="7" width="186" height="406" rx="39" fill="#0B1220"/>
-          <rect x="72" y="13" width="56" height="14" rx="7" fill="#1a1a1a"/>
-          <g clip-path="url(#screenClipAfter)">
-            <rect x="10" y="14" width="180" height="392" fill="#0B1220"/>
-            <rect x="10" y="14" width="180" height="30" fill="#1A8FFF"/>
-            <text x="22" y="32" fill="white" font-family="Arial" font-size="8" font-weight="bold">Bright Smile Dental</text>
-            <rect x="148" y="19" width="34" height="14" rx="7" fill="rgba(255,255,255,0.2)"/>
-            <text x="165" y="29" text-anchor="middle" fill="white" font-family="Arial" font-size="6" font-weight="bold">Book →</text>
-            <text x="22" y="62" fill="white" font-family="Arial" font-size="12" font-weight="bold">Cape Town's</text>
-            <text x="22" y="78" fill="white" font-family="Arial" font-size="12" font-weight="bold">#1 Cosmetic</text>
-            <text x="22" y="94" fill="white" font-family="Arial" font-size="12" font-weight="bold">Dentist</text>
-            <text x="22" y="108" fill="rgba(255,255,255,0.55)" font-family="Arial" font-size="6">500+ happy patients · Same-week appts</text>
-            <rect x="18" y="116" width="164" height="22" rx="5" fill="#1A8FFF"/>
-            <text x="100" y="130" text-anchor="middle" fill="white" font-family="Arial" font-size="7.5" font-weight="bold">📅 Book a Free Consultation</text>
-            <text x="22" y="152" fill="#FFB800" font-family="Arial" font-size="9">★★★★★</text>
-            <text x="82" y="152" fill="rgba(255,255,255,0.6)" font-family="Arial" font-size="6">4.9 · 127 reviews</text>
-            <text x="22" y="164" fill="rgba(255,255,255,0.4)" font-family="Arial" font-size="5.5" font-style="italic">"Couldn't believe how painless it was." — James T.</text>
-            <rect x="18" y="174" width="78" height="28" rx="4" fill="rgba(26,143,255,0.15)" stroke="rgba(26,143,255,0.3)" stroke-width="1"/>
-            <text x="57" y="186" text-anchor="middle" fill="white" font-family="Arial" font-size="6.5" font-weight="bold">Veneers</text>
-            <text x="57" y="197" text-anchor="middle" fill="rgba(255,255,255,0.5)" font-family="Arial" font-size="5.5">From $900</text>
-            <rect x="104" y="174" width="78" height="28" rx="4" fill="rgba(26,143,255,0.15)" stroke="rgba(26,143,255,0.3)" stroke-width="1"/>
-            <text x="143" y="186" text-anchor="middle" fill="white" font-family="Arial" font-size="6.5" font-weight="bold">Whitening</text>
-            <text x="143" y="197" text-anchor="middle" fill="rgba(255,255,255,0.5)" font-family="Arial" font-size="5.5">From $299</text>
-            <rect x="18" y="208" width="78" height="28" rx="4" fill="rgba(26,143,255,0.15)" stroke="rgba(26,143,255,0.3)" stroke-width="1"/>
-            <text x="57" y="220" text-anchor="middle" fill="white" font-family="Arial" font-size="6.5" font-weight="bold">Implants</text>
-            <text x="57" y="231" text-anchor="middle" fill="rgba(255,255,255,0.5)" font-family="Arial" font-size="5.5">From $2,400</text>
-            <rect x="104" y="208" width="78" height="28" rx="4" fill="rgba(26,143,255,0.15)" stroke="rgba(26,143,255,0.3)" stroke-width="1"/>
-            <text x="143" y="220" text-anchor="middle" fill="white" font-family="Arial" font-size="6.5" font-weight="bold">Invisalign</text>
-            <text x="143" y="231" text-anchor="middle" fill="rgba(255,255,255,0.5)" font-family="Arial" font-size="5.5">From $3,500</text>
-            <circle cx="168" cy="368" r="18" fill="#25D366"/>
-            <text x="168" y="374" text-anchor="middle" fill="white" font-family="Arial" font-size="14" font-weight="bold">W</text>
-            <rect x="10" y="390" width="180" height="16" fill="rgba(26,143,255,0.2)"/>
-            <text x="100" y="401" text-anchor="middle" fill="#1A8FFF" font-family="Arial" font-size="6" font-weight="bold">TAP TO BOOK · INSTANT CONFIRMATION</text>
-          </g>
-        </svg>
+        <div class="device-frame device-iphone-15" style="transform: rotate(2deg) translateY(-14px);">
+          <div class="device-screen" style="background:#0B1220; overflow:hidden; font-family:Arial,sans-serif; position:relative;">
+            <div style="background:#1A8FFF; padding:6px 10px; display:flex; justify-content:space-between; align-items:center;">
+              <span style="font-size:8px; font-weight:700; color:white;">Bright Smile Dental</span>
+              <span style="font-size:6px; background:rgba(255,255,255,0.2); color:white; padding:2px 6px; border-radius:8px; font-weight:600;">Book →</span>
+            </div>
+            <div style="padding:10px 10px 6px;">
+              <div style="font-size:13px; font-weight:800; color:white; line-height:1.15; margin-bottom:5px;">Cape Town's #1<br>Cosmetic Dentist</div>
+              <div style="font-size:6px; color:rgba(255,255,255,0.5); margin-bottom:8px;">500+ happy patients · Same-week appointments</div>
+              <div style="background:#1A8FFF; color:white; font-size:7.5px; font-weight:700; text-align:center; padding:6px; border-radius:4px; margin-bottom:8px;">📅 Book a Free Consultation</div>
+              <div style="font-size:8px; color:#FFB800; letter-spacing:1px; margin-bottom:2px;">★★★★★</div>
+              <div style="font-size:5.5px; color:rgba(255,255,255,0.4); font-style:italic; margin-bottom:8px;">"Couldn't believe how painless it was." — James T.</div>
+            </div>
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:3px; margin:0 10px;">
+              <div style="background:rgba(26,143,255,0.12); border:1px solid rgba(26,143,255,0.25); border-radius:4px; padding:5px 6px;">
+                <div style="font-size:6.5px; font-weight:700; color:white;">Veneers</div>
+                <div style="font-size:5.5px; color:rgba(255,255,255,0.45);">From $900</div>
+              </div>
+              <div style="background:rgba(26,143,255,0.12); border:1px solid rgba(26,143,255,0.25); border-radius:4px; padding:5px 6px;">
+                <div style="font-size:6.5px; font-weight:700; color:white;">Whitening</div>
+                <div style="font-size:5.5px; color:rgba(255,255,255,0.45);">From $299</div>
+              </div>
+              <div style="background:rgba(26,143,255,0.12); border:1px solid rgba(26,143,255,0.25); border-radius:4px; padding:5px 6px;">
+                <div style="font-size:6.5px; font-weight:700; color:white;">Implants</div>
+                <div style="font-size:5.5px; color:rgba(255,255,255,0.45);">From $2,400</div>
+              </div>
+              <div style="background:rgba(26,143,255,0.12); border:1px solid rgba(26,143,255,0.25); border-radius:4px; padding:5px 6px;">
+                <div style="font-size:6.5px; font-weight:700; color:white;">Invisalign</div>
+                <div style="font-size:5.5px; color:rgba(255,255,255,0.45);">From $3,500</div>
+              </div>
+            </div>
+            <div style="position:absolute; bottom:14px; right:10px; width:28px; height:28px; background:#25D366; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:14px; font-weight:700; color:white;">W</div>
+          </div>
+        </div>
         <p class="phone-caption good">After Solvr</p>
       </div>
 
@@ -1345,8 +1313,8 @@ footer p { font-size: 12px; color: rgba(255,255,255,0.2); }
 <section class="section" style="background: var(--paper2);">
   <div class="founder-grid" style="display:grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center;">
     <div>
-      <div style="width:80px; height:80px; border-radius:50%; background:var(--paper3); border:2px solid var(--rule2); margin-bottom:24px; display:flex; align-items:center; justify-content:center; overflow:hidden;">
-        <span style="font-size:11px; color:var(--ink3); letter-spacing:0.05em; text-transform:uppercase; text-align:center; line-height:1.4;">Photo<br>here</span>
+      <div style="width:72px; height:72px; border-radius:50%; background:var(--paper3); border:2px solid var(--rule2); margin-bottom:20px; display:flex; align-items:center; justify-content:center;">
+        <span style="font-size:10px; color:var(--ink3); letter-spacing:0.04em; text-transform:uppercase; text-align:center; line-height:1.5;">Photo</span>
       </div>
       <div class="eyebrow">Who's behind this</div>
       <h2 class="sec-h2" style="text-transform:uppercase; margin-bottom: 24px;">Built by someone who's done this before.</h2>
